@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="500" viewBox="0 0 600 500">
+  <rect width="600" height="500" fill="#e8f4fe"/>
+  <rect x="80" y="60" width="440" height="380" rx="20" fill="#bfdbfe"/>
+  <rect x="160" y="160" width="280" height="140" rx="8" fill="#3b82f6" opacity="0.2"/>
+  <text x="300" y="245" text-anchor="middle" font-family="Georgia, serif" font-size="50" fill="#2563eb">🪪</text>
+  <text x="300" y="330" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#1e40af" font-weight="bold">Placa de Identificação</text>
+  <text x="300" y="360" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#6b7280">MDF · Acrílico · Laser</text>
+</svg>

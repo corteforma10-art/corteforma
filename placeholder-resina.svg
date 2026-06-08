@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="500" viewBox="0 0 600 500">
+  <rect width="600" height="500" fill="#f0e8fe"/>
+  <rect x="80" y="60" width="440" height="380" rx="20" fill="#e0d0fe"/>
+  <circle cx="300" cy="210" r="80" fill="#7c3aed" opacity="0.2"/>
+  <text x="300" y="225" text-anchor="middle" font-family="Georgia, serif" font-size="56" fill="#7c3aed">💎</text>
+  <text x="300" y="330" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#6d28d9" font-weight="bold">Miniatura em Resina</text>
+  <text x="300" y="360" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#6b7280">Impressão 3D · Alta definição</text>
+</svg>

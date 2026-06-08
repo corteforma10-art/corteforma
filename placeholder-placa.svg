@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="500" viewBox="0 0 600 500">
+  <rect width="600" height="500" fill="#fef3e8"/>
+  <rect x="80" y="60" width="440" height="380" rx="20" fill="#fde8c8"/>
+  <rect x="150" y="140" width="300" height="200" rx="12" fill="#f97316" opacity="0.2"/>
+  <rect x="160" y="150" width="280" height="180" rx="8" fill="#f97316" opacity="0.15"/>
+  <text x="300" y="245" text-anchor="middle" font-family="Georgia, serif" font-size="48" fill="#f97316">🪵</text>
+  <text x="300" y="330" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#c2410c" font-weight="bold">Placa Decorativa MDF</text>
+  <text x="300" y="360" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#6b7280">Corte e gravação a laser</text>
+</svg>
