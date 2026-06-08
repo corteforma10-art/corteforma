@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO: O título e description são preenchidos pelo script.js a partir do config.js -->
+  <title>Corteforma — Produtos personalizados com fabricação digital</title>
+  <meta name="description" content="Chaveiros, placas, brindes, peças decorativas e produtos personalizados. Fabricados com impressão 3D, resina, laser e CNC em São José dos Campos - SP.">
+  <meta name="theme-color" content="#0f6fff">
+
+  <!-- Open Graph (redes sociais) -->
+  <meta property="og:title"       content="Corteforma — Produtos personalizados">
+  <meta property="og:description" content="Produtos personalizados feitos com fabricação digital. Compre pelo WhatsApp.">
+  <meta property="og:type"        content="website">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!--
+    CONFIGURAÇÃO: Edite o config.js para alterar todos os textos,
+    produtos, cores, contato e muito mais — sem mexer neste HTML.
+  -->
+  <script src="config.js"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER FIXO
+     ============================================================ -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+
+    <!-- Logo (preenchido pelo script.js) -->
+    <a href="#inicio" class="logo" id="site-logo" aria-label="Corteforma - início">
+      <div class="logo-mark" id="logo-mark">CF</div>
+      <span id="logo-name">Corteforma</span>
+    </a>
+
+    <!-- Navegação desktop -->
+    <nav class="main-nav" role="navigation" aria-label="Menu principal">
+      <a href="#inicio">Início</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#categorias">Categorias</a>
+      <a href="#personalizados">Personalizados</a>
+      <a href="#como-comprar">Como Comprar</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <!-- Ações do header -->
+    <div class="header-actions">
+      <a id="header-whatsapp-btn" href="#" target="_blank" rel="noopener"
+         class="btn btn-whatsapp btn-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.554 4.122 1.523 5.854L.057 23.428c-.076.286.196.545.477.461l5.693-1.496A11.948 11.948 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.36-.214-3.728.979.995-3.638-.235-.374A9.867 9.867 0 0 1 2.118 12C2.118 6.537 6.537 2.118 12 2.118S21.882 6.537 21.882 12 17.463 21.882 12 21.882z"/>
+        </svg>
+        Comprar pelo WhatsApp
+      </a>
+      <!-- Hambúrguer mobile -->
+      <button class="hamburger" id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Menu mobile (aberto pelo hamburger) -->
+<nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Menu mobile">
+  <a href="#inicio"         onclick="closeMobileNav()">Início</a>
+  <a href="#produtos"       onclick="closeMobileNav()">Produtos</a>
+  <a href="#categorias"     onclick="closeMobileNav()">Categorias</a>
+  <a href="#personalizados" onclick="closeMobileNav()">Personalizados</a>
+  <a href="#como-comprar"   onclick="closeMobileNav()">Como Comprar</a>
+  <a href="#contato"        onclick="closeMobileNav()">Contato</a>
+</nav>
+
+<!-- ============================================================
+     HERO / BANNER PRINCIPAL
+     ============================================================ -->
+<main>
+<section class="hero" id="inicio" aria-label="Banner principal">
+  <div class="hero-inner">
+
+    <!-- Texto do hero (preenchido pelo script.js) -->
+    <div class="hero-content">
+      <div class="hero-badge" id="hero-badge">✦ Fabricação sob demanda</div>
+      <h1 class="hero-title" id="hero-title">
+        Produtos personalizados feitos com <em>fabricação digital</em>
+      </h1>
+      <p class="hero-subtitle" id="hero-subtitle">
+        Chaveiros, placas, brindes, peças decorativas e muito mais —
+        produzidos com impressão 3D, resina, laser e CNC.
+      </p>
+      <div class="hero-actions">
+        <a href="#produtos" class="btn btn-primary" id="hero-btn-primary">Ver produtos</a>
+        <a href="#" class="btn btn-outline" id="hero-btn-secondary" target="_blank" rel="noopener">
+          Comprar pelo WhatsApp
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value">10+</div>
+          <div class="hero-stat-label">Tipos de produtos</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">3D</div>
+          <div class="hero-stat-label">Impressão, resina, laser</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">100%</div>
+          <div class="hero-stat-label">Personalizável</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual decorativo -->
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-card-stack">
+        <div class="hcard hcard-back1"></div>
+        <div class="hcard hcard-back2"></div>
+        <div class="hcard hcard-main" id="hero-featured-img">
+          <!-- Imagem do produto em destaque injetada pelo JS -->
+        </div>
+      </div>
+      <div class="hero-pill hero-pill-1">
+        <span class="dot"></span> Feito sob encomenda
+      </div>
+      <div class="hero-pill hero-pill-2">
+        <span class="dot"></span> Entrega em todo Brasil
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     CATEGORIAS
+     ============================================================ -->
+<section class="categories-section" id="categorias" aria-label="Categorias de produtos">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Navegue por categoria</span>
+      <h2 class="section-title">O que você procura?</h2>
+      <p class="section-subtitle">Explore nossos produtos por categoria e encontre o que precisa.</p>
+    </div>
+    <!-- Cards de categoria injetados pelo JS -->
+    <div class="categories-grid reveal" id="categories-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRODUTOS EM DESTAQUE
+     ============================================================ -->
+<section class="featured-section" id="destaques" aria-label="Produtos em destaque">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Mais pedidos</span>
+      <h2 class="section-title">Produtos em destaque</h2>
+      <p class="section-subtitle">Conheça os produtos mais populares da nossa vitrine.</p>
+    </div>
+    <!-- Cards injetados pelo JS -->
+    <div class="featured-grid reveal" id="featured-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TODOS OS PRODUTOS + FILTRO
+     ============================================================ -->
+<section class="products-section" id="produtos" aria-label="Todos os produtos">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Catálogo completo</span>
+      <h2 class="section-title">Todos os produtos</h2>
+      <p class="section-subtitle">Filtre por categoria e encontre o produto ideal.</p>
+    </div>
+    <!-- Filtros injetados pelo JS -->
+    <div class="filter-bar reveal" id="filter-bar" role="group" aria-label="Filtros de categoria"></div>
+    <!-- Grid de produtos injetada pelo JS -->
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SEÇÃO PERSONALIZADOS
+     ============================================================ -->
+<section class="custom-section" id="personalizados" aria-label="Produto personalizado sob encomenda">
+  <div class="container">
+    <div class="custom-inner reveal">
+      <div class="custom-icon">✏️</div>
+      <h2 class="section-title" id="custom-title">Tem uma ideia diferente?</h2>
+      <p class="section-subtitle" id="custom-subtitle">
+        Envie uma referência, imagem, desenho ou descrição pelo WhatsApp
+        e transformamos sua ideia em um produto personalizado.
+      </p>
+      <a href="#" class="btn btn-ghost" id="custom-btn" target="_blank" rel="noopener">
+        ✏️ Pedir produto personalizado
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COMO COMPRAR
+     ============================================================ -->
+<section class="howtobuy-section" id="como-comprar" aria-label="Como comprar">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag" id="howtobuy-subtitle-tag">Simples e rápido</span>
+      <h2 class="section-title" id="howtobuy-title">Como comprar</h2>
+      <p class="section-subtitle" id="howtobuy-subtitle">Compre direto pelo WhatsApp em poucos passos.</p>
+    </div>
+    <!-- Passos injetados pelo JS -->
+    <div class="steps-grid reveal" id="steps-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DIFERENCIAIS
+     ============================================================ -->
+<section class="features-section" id="diferenciais" aria-label="Por que a Corteforma">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Por que a Corteforma?</span>
+      <h2 class="section-title">Tecnologia e cuidado em cada peça</h2>
+      <p class="section-subtitle">Combinamos fabricação digital com atenção aos detalhes para entregar produtos únicos.</p>
+    </div>
+    <!-- Cards injetados pelo JS -->
+    <div class="features-grid reveal" id="features-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTATO
+     ============================================================ -->
+<section class="contact-section" id="contato" aria-label="Contato">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="section-header reveal">
+          <span class="section-tag">Fale conosco</span>
+          <h2 class="section-title">Entre em contato</h2>
+          <p class="section-subtitle">Atendemos pelo WhatsApp, Instagram e e-mail.</p>
+        </div>
+        <!-- Itens de contato injetados pelo JS -->
+        <div class="contact-items reveal" id="contact-items"></div>
+      </div>
+      <div class="contact-map reveal" aria-label="Localização">
+        <div class="contact-map-icon">📍</div>
+        <div class="contact-map-city" id="contact-city">São José dos Campos - SP</div>
+        <div class="contact-map-text">Atendimento presencial e envio para todo o Brasil</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     RODAPÉ
+     ============================================================ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <a href="#inicio" class="logo" id="footer-logo" aria-label="Corteforma">
+          <div class="logo-mark">CF</div>
+          <span id="footer-company-name">Corteforma</span>
+        </a>
+        <p class="footer-tagline" id="footer-tagline">
+          Produtos personalizados feitos com fabricação digital.<br>
+          São José dos Campos - SP.
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Navegação</div>
+        <div class="footer-links">
+          <a href="#inicio">Início</a>
+          <a href="#produtos">Produtos</a>
+          <a href="#categorias">Categorias</a>
+          <a href="#personalizados">Personalizados</a>
+          <a href="#como-comprar">Como Comprar</a>
+          <a href="#contato">Contato</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Categorias</div>
+        <div class="footer-links" id="footer-categories"></div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Contato</div>
+        <div class="footer-links" id="footer-contact-links"></div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy" id="footer-copy">© 2025 Corteforma. Todos os direitos reservados.</div>
+      <div class="footer-social" id="footer-social" aria-label="Redes sociais"></div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ============================================================
+     MODAL DE DETALHES DO PRODUTO
+     ============================================================ -->
+<div class="modal-overlay" id="product-modal" role="dialog" aria-modal="true" aria-label="Detalhes do produto">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close-btn" aria-label="Fechar">✕</button>
+    <div class="modal-inner">
+      <div class="modal-img">
+        <img id="modal-img" src="" alt="">
+      </div>
+      <div class="modal-info">
+        <div class="modal-cat" id="modal-cat"></div>
+        <div class="modal-name" id="modal-name"></div>
+        <div class="modal-price" id="modal-price"></div>
+        <div class="modal-desc" id="modal-desc"></div>
+        <div class="modal-meta">
+          <div class="modal-meta-row">
+            <span class="modal-meta-label">Prazo:</span>
+            <span class="modal-meta-val" id="modal-deadline"></span>
+          </div>
+          <div class="modal-meta-row">
+            <span class="modal-meta-label">Status:</span>
+            <span class="modal-meta-val" id="modal-status"></span>
+          </div>
+          <div class="modal-meta-row">
+            <span class="modal-meta-label">Tags:</span>
+            <div class="modal-tags" id="modal-tags"></div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <a href="#" class="btn btn-whatsapp" id="modal-whatsapp-btn" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.554 4.122 1.523 5.854L.057 23.428c-.076.286.196.545.477.461l5.693-1.496A11.948 11.948 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.36-.214-3.728.979.995-3.638-.235-.374A9.867 9.867 0 0 1 2.118 12C2.118 6.537 6.537 2.118 12 2.118S21.882 6.537 21.882 12 17.463 21.882 12 21.882z"/>
+            </svg>
+            Comprar pelo WhatsApp
+          </a>
+          <button class="btn btn-outline btn-sm" id="modal-close-btn2" aria-label="Fechar detalhes">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Botão flutuante WhatsApp -->
+<a href="#" class="whatsapp-float" id="whatsapp-float-btn" target="_blank" rel="noopener"
+   aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.554 4.122 1.523 5.854L.057 23.428c-.076.286.196.545.477.461l5.693-1.496A11.948 11.948 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.36-.214-3.728.979.995-3.638-.235-.374A9.867 9.867 0 0 1 2.118 12C2.118 6.537 6.537 2.118 12 2.118S21.882 6.537 21.882 12 17.463 21.882 12 21.882z"/>
+  </svg>
+</a>
+
+<script src="script.js"></script>
+</body>
+</html>

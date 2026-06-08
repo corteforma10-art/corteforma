@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corteforma — Painel Admin</title>
+  <script src="config.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #0f6fff;
+      --secondary: #111827;
+      --accent: #25D366;
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #111827;
+      --muted: #64748b;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow: 0 1px 8px rgba(0,0,0,0.07);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.10);
+      --font: 'DM Sans', system-ui, sans-serif;
+      --font-display: 'Syne', system-ui, sans-serif;
+      --sidebar-w: 220px;
+      --header-h: 56px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      position: fixed; inset: 0; background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      display: flex; align-items: center; justify-content: center; z-index: 9999;
+    }
+    .login-box {
+      background: #fff; border-radius: var(--radius-lg); padding: 48px 40px; width: 100%; max-width: 380px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.3); text-align: center;
+    }
+    .login-logo { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--secondary); margin-bottom: 6px; }
+    .login-logo span { color: var(--primary); }
+    .login-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 32px; }
+    .login-box label { display: block; text-align: left; font-size: 0.8rem; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+    .login-box input { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: var(--font); font-size: 0.95rem; outline: none; transition: border 0.2s; }
+    .login-box input:focus { border-color: var(--primary); }
+    .login-form-group { margin-bottom: 16px; }
+    .login-btn { width: 100%; padding: 13px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius); font-family: var(--font); font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
+    .login-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .login-error { color: var(--danger); font-size: 0.82rem; margin-top: 10px; display: none; }
+    .login-hint { font-size: 0.75rem; color: var(--muted); margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+
+    /* ── LAYOUT ── */
+    #admin-app { display: none; flex-direction: column; min-height: 100vh; }
+
+    /* TOPBAR */
+    .topbar {
+      height: var(--header-h); background: var(--secondary); color: #fff;
+      display: flex; align-items: center; padding: 0 20px; gap: 16px;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .topbar-logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+    .topbar-logo .mark { width: 28px; height: 28px; border-radius: 6px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; }
+    .topbar-badge { font-size: 0.7rem; background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 99px; color: rgba(255,255,255,0.7); }
+    .topbar-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+    .topbar-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; padding: 7px 14px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.18s; font-family: var(--font); }
+    .topbar-btn-view { background: rgba(255,255,255,0.1); color: #fff; }
+    .topbar-btn-view:hover { background: rgba(255,255,255,0.2); }
+    .topbar-btn-save { background: var(--primary); color: #fff; }
+    .topbar-btn-save:hover { filter: brightness(1.1); }
+    .topbar-btn-export { background: var(--success); color: #fff; }
+    .topbar-btn-export:hover { filter: brightness(1.05); }
+    .topbar-btn-logout { background: transparent; color: rgba(255,255,255,0.5); font-size: 0.8rem; padding: 6px 10px; }
+    .topbar-btn-logout:hover { color: #fff; }
+
+    /* BODY */
+    .admin-body { display: flex; margin-top: var(--header-h); flex: 1; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w); background: var(--surface); border-right: 1px solid var(--border);
+      position: fixed; top: var(--header-h); bottom: 0; left: 0; overflow-y: auto;
+      padding: 16px 12px;
+    }
+    .sidebar-section-title { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 4px 8px; margin: 12px 0 4px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 500; color: var(--muted); cursor: pointer;
+      transition: all 0.15s; border: none; background: none; width: 100%; text-align: left;
+    }
+    .nav-item:hover { background: var(--bg); color: var(--text); }
+    .nav-item.active { background: rgba(15,111,255,0.1); color: var(--primary); font-weight: 600; }
+    .nav-item .nav-icon { font-size: 1rem; width: 20px; text-align: center; }
+    .nav-badge { margin-left: auto; font-size: 0.7rem; background: var(--primary); color: #fff; padding: 1px 7px; border-radius: 99px; }
+
+    /* MAIN CONTENT */
+    .main-content { margin-left: var(--sidebar-w); flex: 1; padding: 28px; }
+
+    /* PANELS */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .panel-title {
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: var(--secondary);
+      margin-bottom: 4px; letter-spacing: -0.02em;
+    }
+    .panel-subtitle { font-size: 0.875rem; color: var(--muted); margin-bottom: 28px; }
+
+    /* CARDS */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+    .card-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--secondary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+    /* FORM */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .form-full { grid-column: 1 / -1; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    .field input, .field select, .field textarea {
+      padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: var(--font); font-size: 0.9rem; color: var(--text); background: var(--bg);
+      outline: none; transition: border 0.18s, background 0.18s; resize: vertical;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--primary); background: #fff;
+    }
+    .field input[type="color"] { height: 42px; cursor: pointer; padding: 4px 8px; }
+    .field-hint { font-size: 0.73rem; color: var(--muted); }
+    .field-row { display: flex; align-items: center; gap: 8px; }
+    .field-row input { flex: 1; }
+
+    /* TOGGLE */
+    .toggle-wrap { display: flex; align-items: center; gap: 10px; }
+    .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-slider {
+      position: absolute; inset: 0; background: var(--border); border-radius: 99px; cursor: pointer; transition: background 0.2s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%;
+      background: #fff; top: 3px; left: 3px; transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle input:checked + .toggle-slider { background: var(--primary); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
+    .toggle-label { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+
+    /* COLORS GRID */
+    .colors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+    .color-field { display: flex; flex-direction: column; gap: 6px; }
+    .color-field label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    .color-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 8px; transition: border 0.18s; }
+    .color-row:focus-within { border-color: var(--primary); }
+    .color-row input[type="color"] { width: 32px; height: 32px; border: none; background: none; cursor: pointer; padding: 0; border-radius: 6px; }
+    .color-row input[type="text"] { flex: 1; border: none; background: none; font-family: 'Courier New', monospace; font-size: 0.88rem; color: var(--text); outline: none; }
+
+    /* PRODUCT LIST */
+    .product-list { display: flex; flex-direction: column; gap: 10px; }
+    .product-list-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px; background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius); cursor: pointer; transition: all 0.18s;
+    }
+    .product-list-item:hover { border-color: var(--primary); background: rgba(15,111,255,0.03); }
+    .product-list-item.editing { border-color: var(--primary); background: rgba(15,111,255,0.05); }
+    .product-thumb { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; background: var(--border); flex-shrink: 0; }
+    .product-list-info { flex: 1; min-width: 0; }
+    .product-list-name { font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .product-list-meta { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .product-list-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    .btn-icon {
+      width: 32px; height: 32px; border-radius: 7px; border: 1.5px solid var(--border);
+      background: var(--surface); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 0.9rem; transition: all 0.15s; color: var(--muted);
+    }
+    .btn-icon:hover { border-color: var(--primary); color: var(--primary); background: rgba(15,111,255,0.06); }
+    .btn-icon.danger:hover { border-color: var(--danger); color: var(--danger); background: rgba(239,68,68,0.06); }
+
+    /* PRODUCT EDITOR */
+    .product-editor {
+      background: var(--surface); border: 1.5px solid var(--primary);
+      border-radius: var(--radius-lg); padding: 24px; margin-top: 16px;
+      box-shadow: 0 0 0 4px rgba(15,111,255,0.06);
+    }
+    .product-editor-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .product-editor-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--primary); }
+    .editor-actions { display: flex; gap: 8px; }
+
+    /* TAGS EDITOR */
+    .tags-editor { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-height: 40px; padding: 8px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 8px; }
+    .tags-editor:focus-within { border-color: var(--primary); background: #fff; }
+    .tag-chip { display: flex; align-items: center; gap: 4px; background: rgba(15,111,255,0.1); color: var(--primary); font-size: 0.75rem; font-weight: 600; padding: 3px 8px 3px 10px; border-radius: 99px; }
+    .tag-chip button { background: none; border: none; cursor: pointer; color: var(--primary); font-size: 0.85rem; line-height: 1; padding: 0; opacity: 0.6; }
+    .tag-chip button:hover { opacity: 1; }
+    .tag-input { flex: 1; min-width: 80px; border: none; background: none; font-family: var(--font); font-size: 0.85rem; outline: none; }
+
+    /* CATEGORIES EDITOR */
+    .cat-list { display: flex; flex-direction: column; gap: 8px; }
+    .cat-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 8px; }
+    .cat-item input { flex: 1; border: none; background: none; font-family: var(--font); font-size: 0.9rem; outline: none; }
+    .cat-item .cat-icon-inp { width: 44px; text-align: center; font-size: 1.1rem; }
+
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border-radius: 8px; border: none; cursor: pointer; font-family: var(--font); font-size: 0.875rem; font-weight: 600; transition: all 0.18s; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-success:hover { filter: brightness(1.05); }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { filter: brightness(1.05); }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-ghost { background: var(--bg); color: var(--muted); }
+    .btn-ghost:hover { background: var(--border); color: var(--text); }
+    .btn-sm { padding: 6px 12px; font-size: 0.8rem; border-radius: 6px; }
+
+    /* STATUS BADGE */
+    .status-badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; }
+    .status-disponivel   { background: #d1fae5; color: #065f46; }
+    .status-sob-encomenda { background: #fef3c7; color: #92400e; }
+    .status-lancamento   { background: #ede9fe; color: #5b21b6; }
+    .status-mais-vendido { background: #fee2e2; color: #991b1b; }
+
+    /* TOAST */
+    .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+    .toast {
+      background: var(--secondary); color: #fff; padding: 12px 20px; border-radius: 10px;
+      font-size: 0.875rem; font-weight: 500; box-shadow: var(--shadow-md);
+      animation: toastIn 0.25s ease forwards; pointer-events: all; display: flex; align-items: center; gap: 10px;
+    }
+    .toast.success { background: #166534; }
+    .toast.error   { background: #991b1b; }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(8px); } }
+
+    /* EXPORT MODAL */
+    .export-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      z-index: 8000; display: flex; align-items: center; justify-content: center; padding: 24px;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .export-overlay.open { opacity: 1; pointer-events: all; }
+    .export-box {
+      background: var(--surface); border-radius: var(--radius-lg); width: 100%; max-width: 700px;
+      max-height: 85vh; overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+    }
+    .export-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .export-header h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; }
+    .export-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
+    .export-code {
+      background: #0f172a; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.78rem;
+      padding: 20px; border-radius: 10px; overflow-x: auto; white-space: pre; line-height: 1.6;
+      max-height: 400px; overflow-y: auto;
+    }
+    .export-info { font-size: 0.875rem; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+    .export-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+
+    /* OVERVIEW STATS */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+    .stat-value { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--secondary); line-height: 1; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+    .stat-icon { font-size: 1.4rem; margin-bottom: 10px; }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    /* SECTION ADD BTN */
+    .add-row { display: flex; justify-content: flex-end; margin-bottom: 16px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main-content { margin-left: 0; padding: 16px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── LOGIN ─── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Corte<span>forma</span></div>
+    <div class="login-sub">Painel de Administração</div>
+    <div class="login-form-group">
+      <label for="login-pass">Senha de acesso</label>
+      <input type="password" id="login-pass" placeholder="Digite a senha" autocomplete="current-password">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-error" id="login-error">Senha incorreta. Tente novamente.</div>
+    <div class="login-hint">Senha padrão: <strong>admin123</strong><br>Altere em <code>admin.html</code> na variável <code>ADMIN_PASSWORD</code></div>
+  </div>
+</div>
+
+<!-- ─── ADMIN APP ─── -->
+<div id="admin-app">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="mark">CF</div>
+      <span id="topbar-name">Corteforma</span>
+    </div>
+    <span class="topbar-badge">Admin</span>
+    <div class="topbar-actions">
+      <button class="topbar-btn topbar-btn-view" onclick="window.open('index.html','_blank')">👁 Ver site</button>
+      <button class="topbar-btn topbar-btn-export" onclick="openExport()">⬇ Exportar config.js</button>
+      <button class="topbar-btn topbar-btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </header>
+
+  <div class="admin-body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section-title">Visão geral</div>
+      <button class="nav-item active" data-panel="overview" onclick="switchPanel(this)">
+        <span class="nav-icon">📊</span> Dashboard
+      </button>
+
+      <div class="sidebar-section-title">Conteúdo</div>
+      <button class="nav-item" data-panel="products" onclick="switchPanel(this)">
+        <span class="nav-icon">📦</span> Produtos
+        <span class="nav-badge" id="badge-products">0</span>
+      </button>
+      <button class="nav-item" data-panel="categories" onclick="switchPanel(this)">
+        <span class="nav-icon">🏷</span> Categorias
+      </button>
+
+      <div class="sidebar-section-title">Configurações</div>
+      <button class="nav-item" data-panel="general" onclick="switchPanel(this)">
+        <span class="nav-icon">⚙️</span> Geral
+      </button>
+      <button class="nav-item" data-panel="colors" onclick="switchPanel(this)">
+        <span class="nav-icon">🎨</span> Cores
+      </button>
+      <button class="nav-item" data-panel="texts" onclick="switchPanel(this)">
+        <span class="nav-icon">✏️</span> Textos
+      </button>
+      <button class="nav-item" data-panel="contact" onclick="switchPanel(this)">
+        <span class="nav-icon">📱</span> Contato
+      </button>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+      <!-- ── OVERVIEW ── -->
+      <div class="panel active" id="panel-overview">
+        <div class="panel-title">Dashboard</div>
+        <div class="panel-subtitle">Resumo rápido do seu site.</div>
+        <div class="stats-grid" id="overview-stats"></div>
+        <div class="card">
+          <div class="card-title">🚀 Como usar este painel</div>
+          <p style="font-size:.875rem;color:var(--muted);line-height:1.7">
+            Use o menu lateral para navegar entre as seções. Faça as alterações desejadas e clique em
+            <strong>"Exportar config.js"</strong> no topo para baixar o arquivo atualizado. Substitua o
+            <code>config.js</code> do seu site pelo arquivo baixado e faça o novo deploy na Cloudflare Pages.
+            <br><br>
+            Todas as alterações ficam salvas no navegador via <strong>localStorage</strong> enquanto você edita.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── PRODUTOS ── -->
+      <div class="panel" id="panel-products">
+        <div class="panel-title">Produtos</div>
+        <div class="panel-subtitle">Adicione, edite ou remova produtos do catálogo.</div>
+        <div class="add-row">
+          <button class="btn btn-primary" onclick="addProduct()">＋ Novo produto</button>
+        </div>
+        <div class="product-list" id="product-list"></div>
+        <div id="product-editor-container"></div>
+      </div>
+
+      <!-- ── CATEGORIAS ── -->
+      <div class="panel" id="panel-categories">
+        <div class="panel-title">Categorias</div>
+        <div class="panel-subtitle">Gerencie as categorias exibidas no site e nos filtros.</div>
+        <div class="card">
+          <div class="card-title">🏷 Categorias cadastradas</div>
+          <div class="cat-list" id="cat-list"></div>
+          <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
+            <button class="btn btn-primary btn-sm" onclick="addCategory()">＋ Nova categoria</button>
+            <button class="btn btn-ghost btn-sm" onclick="saveCategoriesLocal()">💾 Salvar categorias</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── GERAL ── -->
+      <div class="panel" id="panel-general">
+        <div class="panel-title">Informações Gerais</div>
+        <div class="panel-subtitle">Nome da empresa, slogan e informações básicas.</div>
+        <div class="card">
+          <div class="card-title">🏢 Empresa</div>
+          <div class="form-grid">
+            <div class="field form-full">
+              <label>Nome da empresa</label>
+              <input type="text" id="g-companyName" placeholder="Corteforma">
+            </div>
+            <div class="field form-full">
+              <label>Slogan</label>
+              <input type="text" id="g-slogan" placeholder="Produtos personalizados...">
+            </div>
+            <div class="field">
+              <label>Cidade / Estado</label>
+              <input type="text" id="g-city" placeholder="São José dos Campos - SP">
+            </div>
+            <div class="field">
+              <label>Horário de atendimento</label>
+              <input type="text" id="g-hours" placeholder="Segunda a sexta, 9h às 18h">
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn btn-success" onclick="saveGeneral()">💾 Salvar informações gerais</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CORES ── -->
+      <div class="panel" id="panel-colors">
+        <div class="panel-title">Cores do Site</div>
+        <div class="panel-subtitle">Altere a paleta de cores. A prévia é atualizada em tempo real.</div>
+        <div class="card">
+          <div class="card-title">🎨 Paleta de cores</div>
+          <div class="colors-grid" id="colors-grid"></div>
+          <hr class="divider">
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-success" onclick="saveColors()">💾 Salvar cores</button>
+            <button class="btn btn-ghost" onclick="resetColors()">↺ Restaurar padrão</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TEXTOS ── -->
+      <div class="panel" id="panel-texts">
+        <div class="panel-title">Textos do Site</div>
+        <div class="panel-subtitle">Banner principal, seção de personalizados e como comprar.</div>
+
+        <div class="card">
+          <div class="card-title">🖼 Banner principal (Hero)</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Destaque (badge)</label>
+              <input type="text" id="t-badge" placeholder="✦ Fabricação sob demanda">
+            </div>
+            <div class="field">
+              <label>Botão primário</label>
+              <input type="text" id="t-btnP" placeholder="Ver produtos">
+            </div>
+            <div class="field form-full">
+              <label>Título principal</label>
+              <input type="text" id="t-title" placeholder="Produtos personalizados...">
+            </div>
+            <div class="field form-full">
+              <label>Subtítulo</label>
+              <textarea id="t-subtitle" rows="2" placeholder="Descrição do banner..."></textarea>
+            </div>
+            <div class="field form-full">
+              <label>Botão WhatsApp</label>
+              <input type="text" id="t-btnS" placeholder="Comprar pelo WhatsApp">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">✏️ Seção Personalizados</div>
+          <div class="form-grid">
+            <div class="field form-full">
+              <label>Título</label>
+              <input type="text" id="t-custTitle" placeholder="Tem uma ideia diferente?">
+            </div>
+            <div class="field form-full">
+              <label>Subtítulo</label>
+              <textarea id="t-custSub" rows="2"></textarea>
+            </div>
+            <div class="field">
+              <label>Texto do botão</label>
+              <input type="text" id="t-custBtn" placeholder="Pedir produto personalizado">
+            </div>
+            <div class="field">
+              <label>Mensagem WhatsApp</label>
+              <input type="text" id="t-custWa">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🛒 Como Comprar</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Título da seção</label>
+              <input type="text" id="t-htbTitle">
+            </div>
+            <div class="field">
+              <label>Subtítulo da seção</label>
+              <input type="text" id="t-htbSub">
+            </div>
+          </div>
+          <div id="steps-editor" style="margin-top:16px;display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+
+        <button class="btn btn-success" onclick="saveTexts()">💾 Salvar todos os textos</button>
+      </div>
+
+      <!-- ── CONTATO ── -->
+      <div class="panel" id="panel-contact">
+        <div class="panel-title">Contato & Redes Sociais</div>
+        <div class="panel-subtitle">WhatsApp, e-mail, Instagram e localização.</div>
+        <div class="card">
+          <div class="card-title">📱 Dados de contato</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Número WhatsApp</label>
+              <input type="text" id="c-wa" placeholder="5512999999999">
+              <span class="field-hint">Formato: 55 + DDD + número, sem espaços</span>
+            </div>
+            <div class="field">
+              <label>E-mail</label>
+              <input type="email" id="c-email" placeholder="contato@empresa.com">
+            </div>
+            <div class="field">
+              <label>Instagram (URL completa)</label>
+              <input type="url" id="c-instagram" placeholder="https://instagram.com/usuario">
+            </div>
+            <div class="field">
+              <label>Cidade / Estado</label>
+              <input type="text" id="c-city" placeholder="São José dos Campos - SP">
+            </div>
+            <div class="field form-full">
+              <label>Horário de atendimento</label>
+              <input type="text" id="c-hours" placeholder="Segunda a sexta, das 9h às 18h">
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn btn-success" onclick="saveContact()">💾 Salvar contato</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="export-overlay" id="export-overlay">
+  <div class="export-box">
+    <div class="export-header">
+      <h3>⬇ Exportar config.js</h3>
+      <button class="btn-icon" onclick="closeExport()">✕</button>
+    </div>
+    <div class="export-body">
+      <p class="export-info">
+        Copie o código abaixo ou clique em <strong>"Baixar config.js"</strong>.
+        Substitua o arquivo <code>config.js</code> na pasta do seu site e faça novo deploy na Cloudflare Pages.
+      </p>
+      <pre class="export-code" id="export-code"></pre>
+    </div>
+    <div class="export-footer">
+      <button class="btn btn-outline" onclick="copyConfig()">📋 Copiar código</button>
+      <button class="btn btn-success" onclick="downloadConfig()">⬇ Baixar config.js</button>
+      <button class="btn btn-ghost" onclick="closeExport()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+// ============================================================
+// ADMIN — SCRIPT
+// ============================================================
+
+const ADMIN_PASSWORD = 'admin123'; // ← ALTERE ESTA SENHA
+
+// Estado local (cópia editável do config)
+let state = JSON.parse(JSON.stringify(siteConfig));
+
+// Tenta restaurar estado salvo no localStorage
+try {
+  const saved = localStorage.getItem('cf_admin_state');
+  if (saved) state = JSON.parse(saved);
+} catch(e) {}
+
+// Produto sendo editado no momento
+let editingProductId = null;
+
+// ── LOGIN ─────────────────────────────────────────────────
+function doLogin() {
+  const val = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-error');
+  if (val === ADMIN_PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'flex';
+    init();
+  } else {
+    err.style.display = 'block';
+    document.getElementById('login-pass').value = '';
+  }
+}
+
+document.getElementById('login-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+function doLogout() {
+  document.getElementById('admin-app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-pass').value = '';
+}
+
+// ── INIT ──────────────────────────────────────────────────
+function init() {
+  document.getElementById('topbar-name').textContent = state.companyName || 'Corteforma';
+  renderOverview();
+  renderProductList();
+  renderCategories();
+  fillGeneral();
+  fillColors();
+  fillTexts();
+  fillContact();
+  document.getElementById('badge-products').textContent = state.products.length;
+}
+
+function saveLocal() {
+  localStorage.setItem('cf_admin_state', JSON.stringify(state));
+}
+
+// ── PANELS ────────────────────────────────────────────────
+function switchPanel(btn) {
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+}
+
+// ── TOAST ─────────────────────────────────────────────────
+function toast(msg, type = 'success') {
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = type === 'success' ? '✓ ' + msg : '✕ ' + msg;
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(() => {
+    el.style.animation = 'toastOut 0.3s ease forwards';
+    setTimeout(() => el.remove(), 300);
+  }, 2800);
+}
+
+// ── OVERVIEW ──────────────────────────────────────────────
+function renderOverview() {
+  const featured = state.products.filter(p => p.featured).length;
+  const cats = state.categories.filter(c => c.id !== 'todos').length;
+  const statuses = {};
+  state.products.forEach(p => { statuses[p.status] = (statuses[p.status] || 0) + 1; });
+
+  document.getElementById('overview-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value">${state.products.length}</div><div class="stat-label">Produtos cadastrados</div></div>
+    <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-value">${featured}</div><div class="stat-label">Em destaque</div></div>
+    <div class="stat-card"><div class="stat-icon">🏷</div><div class="stat-value">${cats}</div><div class="stat-label">Categorias</div></div>
+    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-value">${statuses['Disponível'] || 0}</div><div class="stat-label">Disponíveis</div></div>
+    <div class="stat-card"><div class="stat-icon">🕐</div><div class="stat-value">${statuses['Sob encomenda'] || 0}</div><div class="stat-label">Sob encomenda</div></div>
+    <div class="stat-card"><div class="stat-icon">🚀</div><div class="stat-value">${statuses['Lançamento'] || 0}</div><div class="stat-label">Lançamentos</div></div>
+  `;
+}
+
+// ── PRODUCTS ──────────────────────────────────────────────
+function renderProductList() {
+  const list = document.getElementById('product-list');
+  if (!state.products.length) {
+    list.innerHTML = '<p style="color:var(--muted);padding:16px;text-align:center">Nenhum produto cadastrado.</p>';
+    return;
+  }
+  list.innerHTML = state.products.map(p => {
+    const statusKey = (p.status || 'Disponível').toLowerCase().replace(/ /g, '-');
+    return `
+      <div class="product-list-item ${editingProductId === p.id ? 'editing' : ''}" id="pli-${p.id}">
+        <img class="product-thumb" src="${esc(p.image)}" alt="${esc(p.name)}"
+             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2252%22 height=%2252%22><rect width=%2252%22 height=%2252%22 fill=%22%23f3f4f6%22/><text x=%2226%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>📦</text></svg>'">
+        <div class="product-list-info">
+          <div class="product-list-name">${esc(p.name)}</div>
+          <div class="product-list-meta">
+            ${esc(categoryLabel(p.category))} &middot;
+            ${esc(p.price || 'Sob orçamento')} &middot;
+            <span class="status-badge status-${statusKey}">${esc(p.status)}</span>
+            ${p.featured ? ' &middot; ⭐ Destaque' : ''}
+          </div>
+        </div>
+        <div class="product-list-actions">
+          <button class="btn-icon" onclick="editProduct(${p.id})" title="Editar">✏️</button>
+          <button class="btn-icon" onclick="toggleFeatured(${p.id})" title="${p.featured ? 'Remover destaque' : 'Marcar destaque'}">
+            ${p.featured ? '⭐' : '☆'}
+          </button>
+          <button class="btn-icon danger" onclick="deleteProduct(${p.id})" title="Remover">🗑</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('badge-products').textContent = state.products.length;
+}
+
+function categoryLabel(id) {
+  const cat = state.categories.find(c => c.id === id);
+  return cat ? cat.label : id;
+}
+
+function editProduct(id) {
+  editingProductId = id;
+  renderProductList();
+  const p = state.products.find(x => x.id === id);
+  if (!p) return;
+
+  const container = document.getElementById('product-editor-container');
+  container.innerHTML = productEditorHTML(p);
+  container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Inicializa tags
+  renderTagsForEditor(p.tags || []);
+
+  // Listeners
+  document.getElementById('pe-img-inp').addEventListener('change', () => {
+    const url = document.getElementById('pe-img-inp').value;
+    document.getElementById('pe-img-preview').src = url;
+  });
+}
+
+function productEditorHTML(p) {
+  const catOptions = state.categories
+    .filter(c => c.id !== 'todos')
+    .map(c => `<option value="${esc(c.id)}" ${c.id === p.category ? 'selected' : ''}>${esc(c.label)}</option>`)
+    .join('');
+
+  const statusOptions = ['Disponível', 'Sob encomenda', 'Lançamento', 'Mais vendido']
+    .map(s => `<option value="${esc(s)}" ${s === p.status ? 'selected' : ''}>${esc(s)}</option>`)
+    .join('');
+
+  return `
+    <div class="product-editor" id="product-editor">
+      <div class="product-editor-header">
+        <div class="product-editor-title">✏️ Editando: ${esc(p.name)}</div>
+        <div class="editor-actions">
+          <button class="btn btn-success btn-sm" onclick="saveProduct(${p.id})">💾 Salvar produto</button>
+          <button class="btn btn-ghost btn-sm" onclick="closeEditor()">✕ Fechar</button>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field form-full">
+          <label>Nome do produto *</label>
+          <input type="text" id="pe-name" value="${esc(p.name)}">
+        </div>
+        <div class="field">
+          <label>Categoria</label>
+          <select id="pe-cat">${catOptions}</select>
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="pe-status">${statusOptions}</select>
+        </div>
+        <div class="field">
+          <label>Preço</label>
+          <input type="text" id="pe-price" value="${esc(p.price || '')}" placeholder="R$ 0,00 ou Sob orçamento">
+        </div>
+        <div class="field">
+          <label>Prazo de produção</label>
+          <input type="text" id="pe-deadline" value="${esc(p.deadline || '')}" placeholder="5 a 10 dias úteis">
+        </div>
+        <div class="field form-full">
+          <label>Descrição curta (card)</label>
+          <input type="text" id="pe-short" value="${esc(p.shortDescription || '')}">
+        </div>
+        <div class="field form-full">
+          <label>Descrição completa (modal)</label>
+          <textarea id="pe-full" rows="4">${esc(p.fullDescription || '')}</textarea>
+        </div>
+        <div class="field form-full">
+          <label>Mensagem automática WhatsApp</label>
+          <input type="text" id="pe-wa" value="${esc(p.whatsappMessage || '')}">
+          <span class="field-hint">Esta mensagem é enviada quando o cliente clica em "Comprar"</span>
+        </div>
+        <div class="field form-full">
+          <label>URL da imagem</label>
+          <div class="field-row">
+            <input type="text" id="pe-img-inp" value="${esc(p.image || '')}">
+            <img id="pe-img-preview" src="${esc(p.image || '')}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--bg);flex-shrink:0"
+                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2244%22 height=%2244%22><rect width=%2244%22 height=%2244%22 fill=%22%23f3f4f6%22/><text x=%2222%22 y=%2228%22 text-anchor=%22middle%22 font-size=%2218%22>📦</text></svg>'">
+          </div>
+          <span class="field-hint">Coloque a imagem na pasta assets/ e use: assets/nome-do-arquivo.jpg</span>
+        </div>
+        <div class="field form-full">
+          <label>Tags (pressione Enter para adicionar)</label>
+          <div class="tags-editor" id="tags-editor">
+            <input type="text" class="tag-input" id="tag-input" placeholder="Digite uma tag e pressione Enter">
+          </div>
+        </div>
+        <div class="field">
+          <div class="toggle-wrap">
+            <label class="toggle">
+              <input type="checkbox" id="pe-featured" ${p.featured ? 'checked' : ''}>
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Produto em destaque</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-success" onclick="saveProduct(${p.id})">💾 Salvar produto</button>
+        <button class="btn btn-ghost" onclick="closeEditor()">Cancelar</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderTagsForEditor(tags) {
+  const editor = document.getElementById('tags-editor');
+  const input  = document.getElementById('tag-input');
+  if (!editor || !input) return;
+
+  // Remove chips antigos
+  editor.querySelectorAll('.tag-chip').forEach(c => c.remove());
+
+  tags.forEach(tag => {
+    const chip = document.createElement('span');
+    chip.className = 'tag-chip';
+    chip.innerHTML = `${esc(tag)}<button onclick="removeTag('${esc(tag)}')" title="Remover tag">×</button>`;
+    editor.insertBefore(chip, input);
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && input.value.trim()) {
+      e.preventDefault();
+      const newTag = input.value.trim();
+      const currentTags = getTagsFromEditor();
+      if (!currentTags.includes(newTag)) {
+        renderTagsForEditor([...currentTags, newTag]);
+      }
+      input.value = '';
+    }
+  });
+}
+
+function removeTag(tag) {
+  const currentTags = getTagsFromEditor().filter(t => t !== tag);
+  renderTagsForEditor(currentTags);
+}
+
+function getTagsFromEditor() {
+  return Array.from(document.querySelectorAll('#tags-editor .tag-chip'))
+    .map(c => c.textContent.replace('×', '').trim());
+}
+
+function saveProduct(id) {
+  const p = state.products.find(x => x.id === id);
+  if (!p) return;
+
+  const name = document.getElementById('pe-name')?.value.trim();
+  if (!name) { toast('O nome do produto é obrigatório.', 'error'); return; }
+
+  p.name             = name;
+  p.category         = document.getElementById('pe-cat')?.value;
+  p.status           = document.getElementById('pe-status')?.value;
+  p.price            = document.getElementById('pe-price')?.value;
+  p.deadline         = document.getElementById('pe-deadline')?.value;
+  p.shortDescription = document.getElementById('pe-short')?.value;
+  p.fullDescription  = document.getElementById('pe-full')?.value;
+  p.whatsappMessage  = document.getElementById('pe-wa')?.value;
+  p.image            = document.getElementById('pe-img-inp')?.value;
+  p.tags             = getTagsFromEditor();
+  p.featured         = document.getElementById('pe-featured')?.checked || false;
+
+  saveLocal();
+  closeEditor();
+  renderProductList();
+  renderOverview();
+  toast('Produto "' + name + '" salvo!');
+}
+
+function addProduct() {
+  const newId = Math.max(0, ...state.products.map(p => p.id)) + 1;
+  const newProduct = {
+    id: newId,
+    name: 'Novo produto ' + newId,
+    category: state.categories.find(c => c.id !== 'todos')?.id || 'personalizados',
+    price: 'Sob orçamento',
+    shortDescription: '',
+    fullDescription: '',
+    image: 'assets/placeholder-encomenda.svg',
+    tags: [],
+    status: 'Disponível',
+    featured: false,
+    deadline: 'A combinar',
+    whatsappMessage: `Olá! Tenho interesse em *Novo produto ${newId}*. Gostaria de mais informações.`
+  };
+  state.products.push(newProduct);
+  saveLocal();
+  renderProductList();
+  editProduct(newId);
+  toast('Novo produto criado! Complete as informações.');
+}
+
+function deleteProduct(id) {
+  const p = state.products.find(x => x.id === id);
+  if (!confirm(`Remover "${p?.name}"? Esta ação não pode ser desfeita.`)) return;
+  state.products = state.products.filter(x => x.id !== id);
+  if (editingProductId === id) closeEditor();
+  saveLocal();
+  renderProductList();
+  renderOverview();
+  toast('Produto removido.');
+}
+
+function toggleFeatured(id) {
+  const p = state.products.find(x => x.id === id);
+  if (!p) return;
+  p.featured = !p.featured;
+  saveLocal();
+  renderProductList();
+  renderOverview();
+  toast(p.featured ? '⭐ Marcado como destaque!' : 'Destaque removido.');
+}
+
+function closeEditor() {
+  editingProductId = null;
+  document.getElementById('product-editor-container').innerHTML = '';
+  document.querySelectorAll('.product-list-item').forEach(el => el.classList.remove('editing'));
+}
+
+// ── CATEGORIES ────────────────────────────────────────────
+function renderCategories() {
+  const list = document.getElementById('cat-list');
+  list.innerHTML = state.categories.map((c, i) => `
+    <div class="cat-item" id="cat-item-${i}">
+      <input class="cat-icon-inp" type="text" value="${esc(c.icon || '')}" placeholder="🏷"
+             onchange="updateCategory(${i}, 'icon', this.value)" title="Ícone (emoji)">
+      <input type="text" value="${esc(c.id)}" placeholder="id-sem-espacos"
+             onchange="updateCategory(${i}, 'id', this.value)" style="width:140px;font-family:monospace;font-size:.8rem;color:var(--muted)">
+      <input type="text" value="${esc(c.label)}" placeholder="Nome visível"
+             onchange="updateCategory(${i}, 'label', this.value)" style="flex:1">
+      ${i === 0
+        ? '<span style="font-size:.7rem;color:var(--muted);flex-shrink:0">(obrigatório)</span>'
+        : `<button class="btn-icon danger" onclick="deleteCategory(${i})" title="Remover">🗑</button>`}
+    </div>
+  `).join('');
+}
+
+function updateCategory(index, field, value) {
+  state.categories[index][field] = value;
+}
+
+function addCategory() {
+  state.categories.push({ id: 'nova-cat-' + Date.now(), label: 'Nova Categoria', icon: '📦' });
+  renderCategories();
+}
+
+function deleteCategory(index) {
+  if (state.categories.length <= 1) { toast('Deve existir pelo menos uma categoria.', 'error'); return; }
+  state.categories.splice(index, 1);
+  renderCategories();
+}
+
+function saveCategoriesLocal() {
+  saveLocal();
+  renderOverview();
+  toast('Categorias salvas!');
+}
+
+// ── GENERAL ───────────────────────────────────────────────
+function fillGeneral() {
+  setVal('g-companyName', state.companyName);
+  setVal('g-slogan',      state.slogan);
+  setVal('g-city',        state.city);
+  setVal('g-hours',       state.businessHours);
+}
+
+function saveGeneral() {
+  state.companyName   = getVal('g-companyName');
+  state.slogan        = getVal('g-slogan');
+  state.city          = getVal('g-city');
+  state.businessHours = getVal('g-hours');
+  saveLocal();
+  document.getElementById('topbar-name').textContent = state.companyName;
+  toast('Informações gerais salvas!');
+}
+
+// ── COLORS ────────────────────────────────────────────────
+const colorDefs = [
+  { key: 'primary',    label: 'Cor principal',       hint: 'Botões, links, destaques' },
+  { key: 'secondary',  label: 'Cor secundária',      hint: 'Textos escuros, header' },
+  { key: 'accent',     label: 'WhatsApp (verde)',     hint: 'Botões do WhatsApp' },
+  { key: 'background', label: 'Fundo da página',      hint: 'Cor de fundo geral' },
+  { key: 'surface',    label: 'Fundo dos cards',      hint: 'Cards e painéis' },
+  { key: 'text',       label: 'Texto principal',      hint: 'Cor do texto' },
+  { key: 'textMuted',  label: 'Texto suave',          hint: 'Subtítulos, dicas' },
+  { key: 'border',     label: 'Bordas',               hint: 'Linhas divisórias' },
+];
+
+const defaultColors = {
+  primary: '#0f6fff', secondary: '#111827', accent: '#25D366',
+  background: '#f8fafc', surface: '#ffffff', text: '#111827',
+  textMuted: '#6b7280', border: '#e5e7eb'
+};
+
+function fillColors() {
+  const grid = document.getElementById('colors-grid');
+  grid.innerHTML = colorDefs.map(def => `
+    <div class="color-field">
+      <label>${esc(def.label)}</label>
+      <div class="color-row">
+        <input type="color" id="col-pick-${def.key}" value="${esc(state.colors[def.key] || defaultColors[def.key])}"
+               oninput="syncColorText('${def.key}')">
+        <input type="text" id="col-text-${def.key}" value="${esc(state.colors[def.key] || defaultColors[def.key])}"
+               maxlength="9" oninput="syncColorPicker('${def.key}')">
+      </div>
+      <span class="field-hint">${esc(def.hint)}</span>
+    </div>
+  `).join('');
+}
+
+function syncColorText(key) {
+  const val = document.getElementById('col-pick-' + key).value;
+  document.getElementById('col-text-' + key).value = val;
+}
+
+function syncColorPicker(key) {
+  const val = document.getElementById('col-text-' + key).value;
+  if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+    document.getElementById('col-pick-' + key).value = val;
+  }
+}
+
+function saveColors() {
+  colorDefs.forEach(def => {
+    state.colors[def.key] = document.getElementById('col-text-' + def.key).value;
+  });
+  saveLocal();
+  toast('Cores salvas! Exporte o config.js para ver no site.');
+}
+
+function resetColors() {
+  if (!confirm('Restaurar cores padrão?')) return;
+  state.colors = { ...defaultColors };
+  fillColors();
+  toast('Cores restauradas!');
+}
+
+// ── TEXTS ─────────────────────────────────────────────────
+function fillTexts() {
+  const h = state.hero || {};
+  setVal('t-badge',     h.badge);
+  setVal('t-title',     h.title);
+  setVal('t-subtitle',  h.subtitle);
+  setVal('t-btnP',      h.buttonPrimary);
+  setVal('t-btnS',      h.buttonSecondary);
+
+  const c = state.custom || {};
+  setVal('t-custTitle', c.title);
+  setVal('t-custSub',   c.subtitle);
+  setVal('t-custBtn',   c.buttonText);
+  setVal('t-custWa',    c.whatsappMessage);
+
+  const htb = state.howToBuy || {};
+  setVal('t-htbTitle', htb.title);
+  setVal('t-htbSub',   htb.subtitle);
+
+  const stepsEl = document.getElementById('steps-editor');
+  stepsEl.innerHTML = (htb.steps || []).map((s, i) => `
+    <div style="display:grid;grid-template-columns:60px 1fr 2fr;gap:8px;align-items:center">
+      <input type="text" value="${esc(s.number)}" placeholder="01" style="padding:8px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font);text-align:center" id="step-num-${i}">
+      <input type="text" value="${esc(s.title)}"  placeholder="Título do passo" style="padding:8px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font)" id="step-title-${i}">
+      <input type="text" value="${esc(s.description)}" placeholder="Descrição" style="padding:8px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font)" id="step-desc-${i}">
+    </div>
+  `).join('');
+}
+
+function saveTexts() {
+  state.hero = {
+    badge:           getVal('t-badge'),
+    title:           getVal('t-title'),
+    subtitle:        getVal('t-subtitle'),
+    buttonPrimary:   getVal('t-btnP'),
+    buttonSecondary: getVal('t-btnS'),
+  };
+  state.custom = {
+    title:            getVal('t-custTitle'),
+    subtitle:         getVal('t-custSub'),
+    buttonText:       getVal('t-custBtn'),
+    whatsappMessage:  getVal('t-custWa'),
+  };
+  const steps = (state.howToBuy?.steps || []).map((_, i) => ({
+    number:      document.getElementById('step-num-' + i)?.value || '',
+    title:       document.getElementById('step-title-' + i)?.value || '',
+    description: document.getElementById('step-desc-' + i)?.value || '',
+  }));
+  state.howToBuy = { title: getVal('t-htbTitle'), subtitle: getVal('t-htbSub'), steps };
+  saveLocal();
+  toast('Textos salvos!');
+}
+
+// ── CONTACT ───────────────────────────────────────────────
+function fillContact() {
+  setVal('c-wa',        state.whatsappNumber);
+  setVal('c-email',     state.email);
+  setVal('c-instagram', state.instagram);
+  setVal('c-city',      state.city);
+  setVal('c-hours',     state.businessHours);
+}
+
+function saveContact() {
+  state.whatsappNumber = getVal('c-wa');
+  state.email          = getVal('c-email');
+  state.instagram      = getVal('c-instagram');
+  state.city           = getVal('c-city');
+  state.businessHours  = getVal('c-hours');
+  saveLocal();
+  toast('Contato salvo!');
+}
+
+// ── EXPORT ────────────────────────────────────────────────
+function generateConfigJS() {
+  return `// ============================================================
+// CORTEFORMA - ARQUIVO DE CONFIGURAÇÃO CENTRAL
+// Gerado pelo Painel Admin em ${new Date().toLocaleString('pt-BR')}
+// ============================================================
+
+const siteConfig = ${JSON.stringify(state, null, 2)};
+`;
+}
+
+function openExport() {
+  document.getElementById('export-code').textContent = generateConfigJS();
+  document.getElementById('export-overlay').classList.add('open');
+}
+
+function closeExport() {
+  document.getElementById('export-overlay').classList.remove('open');
+}
+
+document.getElementById('export-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeExport();
+});
+
+function copyConfig() {
+  navigator.clipboard.writeText(generateConfigJS()).then(() => {
+    toast('Código copiado para a área de transferência!');
+  });
+}
+
+function downloadConfig() {
+  const blob = new Blob([generateConfigJS()], { type: 'text/javascript' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'config.js';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('config.js baixado! Substitua no site e faça novo deploy.');
+}
+
+// ── HELPERS ───────────────────────────────────────────────
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.value = val || '';
+}
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : '';
+}
+function esc(str) {
+  return String(str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
+}
+</script>
+</body>
+</html>
