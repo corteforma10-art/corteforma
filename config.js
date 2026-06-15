@@ -1,6 +1,6 @@
 // ============================================================
 // CORTEFORMA - ARQUIVO DE CONFIGURAÇÃO CENTRAL
-// Gerado pelo Painel Admin em 15/06/2026, 14:07:49
+// Gerado pelo Painel Admin em 15/06/2026, 14:10:31
 // ============================================================
 
 const siteConfig = {
@@ -14,9 +14,9 @@ const siteConfig = {
   "logo": "assets/logo.jpg",
   "colors": {
     "primary": "#FF5A00",
-    "secondary": "#050505",
+    "secondary": "#111111",
     "accent": "#25D366",
-    "background": "#050505",
+    "background": "#F5F6F8",
     "surface": "#FFFFFF",
     "text": "#111827",
     "textMuted": "#6B7280",
