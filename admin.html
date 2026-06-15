@@ -302,7 +302,13 @@
     </div>
     <button class="login-btn" onclick="doLogin()">Entrar</button>
     <div class="login-error" id="login-error">Senha incorreta. Tente novamente.</div>
-    <div class="login-hint">Senha padrão: <strong>admin123</strong><br>Altere em <code>admin.html</code> na variável <code>ADMIN_PASSWORD</code></div>
+    <div class="login-hint" id="login-hint-text">Carregando...</div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const u = localStorage.getItem('cf_admin_username') || 'admin';
+        document.getElementById('login-hint-text').innerHTML = 'Usuário: <strong>' + u + '</strong> &nbsp;·&nbsp; Senha padrão: <strong>admin123</strong>';
+      });
+    </script>
   </div>
 </div>
 
@@ -354,6 +360,11 @@
       </button>
       <button class="nav-item" data-panel="contact" onclick="switchPanel(this)">
         <span class="nav-icon">📱</span> Contato
+      </button>
+
+      <div class="sidebar-section-title">Segurança</div>
+      <button class="nav-item" data-panel="security" onclick="switchPanel(this)">
+        <span class="nav-icon">🔐</span> Usuário e Senha
       </button>
     </aside>
 
@@ -553,6 +564,65 @@
         </div>
       </div>
 
+      <!-- ── SEGURANÇA ── -->
+      <div class="panel" id="panel-security">
+        <div class="panel-title">Usuário e Senha</div>
+        <div class="panel-subtitle">Altere as credenciais de acesso ao painel admin.</div>
+
+        <div class="card">
+          <div class="card-title">👤 Alterar usuário</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Usuário atual</label>
+              <input type="text" id="sec-user-current" placeholder="Usuário atual" autocomplete="off">
+            </div>
+            <div class="field">
+              <label>Novo usuário</label>
+              <input type="text" id="sec-user-new" placeholder="Novo usuário" autocomplete="off">
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn btn-primary" onclick="changeUsername()">💾 Salvar usuário</button>
+          </div>
+          <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:8px;font-size:.8rem;color:var(--muted)">
+            ⚠️ O usuário atual é exibido na tela de login. Padrão: <strong>admin</strong>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🔑 Alterar senha</div>
+          <div class="form-grid">
+            <div class="field form-full">
+              <label>Senha atual</label>
+              <input type="password" id="sec-pass-current" placeholder="Digite a senha atual" autocomplete="current-password">
+            </div>
+            <div class="field">
+              <label>Nova senha</label>
+              <input type="password" id="sec-pass-new" placeholder="Nova senha (mín. 6 caracteres)" autocomplete="new-password">
+            </div>
+            <div class="field">
+              <label>Confirmar nova senha</label>
+              <input type="password" id="sec-pass-confirm" placeholder="Repita a nova senha" autocomplete="new-password">
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn btn-primary" onclick="changePassword()">🔑 Alterar senha</button>
+          </div>
+          <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:8px;font-size:.8rem;color:var(--muted)">
+            ⚠️ A senha fica salva no navegador. Se trocar de dispositivo, use a senha padrão <strong>admin123</strong> e redefina novamente.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🔄 Redefinir credenciais</div>
+          <p style="font-size:.875rem;color:var(--muted);margin-bottom:16px">
+            Se esquecer a senha, você pode redefinir tudo para o padrão diretamente no arquivo <code>admin.html</code>,
+            alterando a variável <code>ADMIN_PASSWORD</code> para <code>admin123</code>.
+          </p>
+          <button class="btn btn-danger btn-sm" onclick="resetCredentials()">⚠️ Redefinir para padrão</button>
+        </div>
+      </div>
+
     </main>
   </div>
 </div>
@@ -665,10 +735,17 @@ try {
 let editingProductId = null;
 
 // ── LOGIN ─────────────────────────────────────────────────
+function getSavedPassword() {
+  return localStorage.getItem('cf_admin_password') || ADMIN_PASSWORD;
+}
+function getSavedUsername() {
+  return localStorage.getItem('cf_admin_username') || 'admin';
+}
+
 function doLogin() {
   const val = document.getElementById('login-pass').value;
   const err = document.getElementById('login-error');
-  if (val === ADMIN_PASSWORD) {
+  if (val === getSavedPassword()) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-app').style.display = 'flex';
     init();
@@ -1366,6 +1443,47 @@ async function publishToGithub() {
     toast('Erro ao publicar: ' + err.message, 'error');
     console.error(err);
   }
+}
+
+
+// ── SECURITY ──────────────────────────────────────────────
+
+function changeUsername() {
+  const current = document.getElementById('sec-user-current').value.trim();
+  const newUser  = document.getElementById('sec-user-new').value.trim();
+
+  if (!current || !newUser) { toast('Preencha todos os campos.', 'error'); return; }
+  if (current !== getSavedUsername()) { toast('Usuário atual incorreto.', 'error'); return; }
+  if (newUser.length < 3) { toast('O usuário deve ter pelo menos 3 caracteres.', 'error'); return; }
+
+  localStorage.setItem('cf_admin_username', newUser);
+  document.getElementById('sec-user-current').value = '';
+  document.getElementById('sec-user-new').value = '';
+  toast('Usuário alterado para "' + newUser + '" com sucesso!');
+}
+
+function changePassword() {
+  const current  = document.getElementById('sec-pass-current').value;
+  const newPass  = document.getElementById('sec-pass-new').value;
+  const confirm  = document.getElementById('sec-pass-confirm').value;
+
+  if (!current || !newPass || !confirm) { toast('Preencha todos os campos.', 'error'); return; }
+  if (current !== getSavedPassword()) { toast('Senha atual incorreta.', 'error'); return; }
+  if (newPass.length < 6) { toast('A nova senha deve ter pelo menos 6 caracteres.', 'error'); return; }
+  if (newPass !== confirm) { toast('As senhas não coincidem.', 'error'); return; }
+
+  localStorage.setItem('cf_admin_password', newPass);
+  document.getElementById('sec-pass-current').value = '';
+  document.getElementById('sec-pass-new').value = '';
+  document.getElementById('sec-pass-confirm').value = '';
+  toast('Senha alterada com sucesso!');
+}
+
+function resetCredentials() {
+  if (!confirm('Redefinir usuário para "admin" e senha para "admin123"?')) return;
+  localStorage.removeItem('cf_admin_password');
+  localStorage.removeItem('cf_admin_username');
+  toast('Credenciais redefinidas para o padrão!');
 }
 
 // ── HELPERS ───────────────────────────────────────────────
