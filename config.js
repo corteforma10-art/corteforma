@@ -1,6 +1,6 @@
 // ============================================================
 // CORTEFORMA - ARQUIVO DE CONFIGURAÇÃO CENTRAL
-// Gerado pelo Painel Admin em 15/06/2026, 13:58:03
+// Gerado pelo Painel Admin em 15/06/2026, 14:07:49
 // ============================================================
 
 const siteConfig = {
@@ -13,14 +13,14 @@ const siteConfig = {
   "businessHours": "Segunda a sexta, das 9h às 18h",
   "logo": "assets/logo.jpg",
   "colors": {
-    "primary": "#e63000",
-    "secondary": "#111111",
+    "primary": "#FF5A00",
+    "secondary": "#050505",
     "accent": "#25D366",
-    "background": "#808080",
-    "surface": "#ffffff",
+    "background": "#050505",
+    "surface": "#FFFFFF",
     "text": "#111827",
-    "textMuted": "#6b7280",
-    "border": "#e5e7eb"
+    "textMuted": "#6B7280",
+    "border": "#E5E7EB"
   },
   "hero": {
     "title": "Produtos personalizados feitos com fabricação digital",
