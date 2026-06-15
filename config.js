@@ -1,6 +1,6 @@
 // ============================================================
 // CORTEFORMA - ARQUIVO DE CONFIGURAÇÃO CENTRAL
-// Gerado pelo Painel Admin em 15/06/2026, 14:10:31
+// Gerado pelo Painel Admin em 15/06/2026, 15:14:18
 // ============================================================
 
 const siteConfig = {
