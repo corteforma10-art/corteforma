@@ -20,6 +20,15 @@
     return `https://wa.me/${num}?text=${msg}`;
   }
 
+  /** Dispara evento Meta Pixel ao clicar em qualquer link WhatsApp */
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a[href*="wa.me"]');
+    if (link && typeof fbq !== 'undefined') {
+      fbq('track', 'Contact');
+      fbq('track', 'Lead');
+    }
+  });
+
   /** Aplica variáveis CSS de cor a partir do config.js */
   function applyColors() {
     const root = document.documentElement;
@@ -101,14 +110,18 @@
     const subtitle = document.getElementById('hero-subtitle');
     const btnP     = document.getElementById('hero-btn-primary');
     const btnS     = document.getElementById('hero-btn-secondary');
+    const hlBox    = document.getElementById('hero-highlights');
 
     if (badge)    badge.textContent = h.badge || '✦ Fabricação sob demanda';
-    if (title)    title.innerHTML   = esc(h.title).replace(/fabricação digital/gi, '<em>fabricação digital</em>');
+    if (title)    title.innerHTML   = esc(h.title).replace(/São José dos Campos/gi, '<em>São José dos Campos</em>');
     if (subtitle) subtitle.textContent = h.subtitle;
-    if (btnP)     btnP.textContent  = h.buttonPrimary;
-    if (btnS) {
-      btnS.textContent = h.buttonSecondary;
-      btnS.href = whatsappLink('Olá! Vim pelo banner do site da ' + cfg.companyName + '.');
+    if (btnP) {
+      btnP.textContent = h.buttonPrimary;
+      btnP.href = whatsappLink('Olá, CorteForma! Vim pelo site e gostaria de solicitar um orçamento.');
+    }
+    if (btnS)     btnS.textContent  = h.buttonSecondary;
+    if (hlBox && h.highlights) {
+      hlBox.innerHTML = h.highlights.map(hl => `<span class="hero-hl">${esc(hl)}</span>`).join('');
     }
 
     // Imagem do hero: primeiro produto em destaque
@@ -136,6 +149,7 @@
            aria-label="Ver produtos de ${esc(cat.label)}">
         <span class="cat-icon" aria-hidden="true">${cat.icon || '📦'}</span>
         <span class="cat-label">${esc(cat.label)}</span>
+        ${cat.description ? `<span class="cat-desc">${esc(cat.description)}</span>` : ''}
       </div>
     `).join('');
 
@@ -318,6 +332,15 @@
 
     const waBtn = document.getElementById('modal-whatsapp-btn');
     if (waBtn) waBtn.href = whatsappLink(product.whatsappMessage);
+
+    // Evento Meta Pixel - ViewContent
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'ViewContent', {
+        content_name: product.name,
+        content_category: categoryLabel(product.category),
+        content_type: 'product',
+      });
+    }
 
     // Abre overlay
     const overlay = document.getElementById('product-modal');

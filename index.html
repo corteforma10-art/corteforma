@@ -4,28 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO: O título e description são preenchidos pelo script.js a partir do config.js -->
-  <title>Corteforma — Produtos personalizados com fabricação digital</title>
-  <meta name="description" content="Chaveiros, placas, brindes, peças decorativas e produtos personalizados. Fabricados com impressão 3D, resina, laser e CNC em São José dos Campos - SP.">
-  <meta name="theme-color" content="#e63000">
+  <title>CorteForma | Impressão 3D e Corte a Laser em São José dos Campos</title>
+  <meta name="description" content="Produtos personalizados em impressão 3D, resina, corte e gravação a laser. Brindes, placas, chaveiros, protótipos e peças sob medida em São José dos Campos.">
+  <meta name="keywords" content="impressão 3D São José dos Campos, corte a laser, gravação a laser, laser CO2, produtos personalizados, brindes personalizados, chaveiros personalizados, placas personalizadas, protótipos, peças em resina, fabricação digital, peças sob medida, CorteForma">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#FF5A00">
+  <meta name="author" content="CorteForma">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="shortcut icon" href="assets/favicon.svg">
   <link rel="apple-touch-icon" href="assets/favicon.svg">
 
-  <!-- Open Graph (redes sociais) -->
-  <meta property="og:title"       content="Corteforma — Produtos personalizados">
-  <meta property="og:description" content="Produtos personalizados feitos com fabricação digital. Compre pelo WhatsApp.">
+  <!-- Open Graph -->
+  <meta property="og:title"       content="CorteForma | Impressão 3D e Corte a Laser em São José dos Campos">
+  <meta property="og:description" content="Produtos personalizados em impressão 3D, resina, corte e gravação a laser. Brindes, placas, chaveiros e protótipos em São José dos Campos.">
   <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://corteforma.com">
+  <meta property="og:image"       content="https://corteforma.com/assets/logo.jpg">
+  <meta property="og:locale"      content="pt_BR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="CorteForma | Impressão 3D e Corte a Laser em São José dos Campos">
+  <meta name="twitter:description" content="Produtos personalizados em impressão 3D, resina, corte e gravação a laser em São José dos Campos.">
+  <meta name="twitter:image"       content="https://corteforma.com/assets/logo.jpg">
+
+  <!-- Schema.org LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "CorteForma",
+    "description": "Empresa de fabricação digital especializada em impressão 3D, corte e gravação a laser CO₂, peças em resina, protótipos, brindes e produtos personalizados.",
+    "url": "https://corteforma.com",
+    "telephone": "+55-12-99734-7806",
+    "email": "contato@corteforma.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "São José dos Campos",
+      "addressRegion": "SP",
+      "addressCountry": "BR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -23.1794,
+      "longitude": -45.8869
+    },
+    "openingHours": "Mo-Fr 09:00-18:00",
+    "sameAs": ["https://instagram.com/corteforma"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Produtos CorteForma",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Impressão 3D"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Corte a Laser CO₂"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Gravação a Laser"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Peças em Resina"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Protótipos"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brindes Personalizados"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Produtos Sob Medida"}}
+      ]
+    }
+  }
+  </script>
 
   <link rel="stylesheet" href="style.css">
-
-  <!--
-    CONFIGURAÇÃO: Edite o config.js para alterar todos os textos,
-    produtos, cores, contato e muito mais — sem mexer neste HTML.
-  -->
   <script src="config.js"></script>
+
   <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s)
@@ -43,23 +89,16 @@
   src="https://www.facebook.com/tr?id=1501828341406066&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
-
 </head>
 <body>
 
-<!-- ============================================================
-     HEADER FIXO
-     ============================================================ -->
+<!-- HEADER -->
 <header class="site-header" role="banner">
   <div class="header-inner">
-
-    <!-- Logo (preenchido pelo script.js) -->
-    <a href="#inicio" class="logo" id="site-logo" aria-label="Corteforma - início">
+    <a href="#inicio" class="logo" id="site-logo" aria-label="CorteForma - início">
       <div class="logo-mark" id="logo-mark">CF</div>
-      <span id="logo-name">Corteforma</span>
+      <span id="logo-name">CorteForma</span>
     </a>
-
-    <!-- Navegação desktop -->
     <nav class="main-nav" role="navigation" aria-label="Menu principal">
       <a href="#inicio">Início</a>
       <a href="#produtos">Produtos</a>
@@ -68,18 +107,11 @@
       <a href="#como-comprar">Como Comprar</a>
       <a href="#contato">Contato</a>
     </nav>
-
-    <!-- Ações do header -->
     <div class="header-actions">
-      <a id="header-whatsapp-btn" href="#" target="_blank" rel="noopener"
-         class="btn btn-whatsapp btn-sm">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.554 4.122 1.523 5.854L.057 23.428c-.076.286.196.545.477.461l5.693-1.496A11.948 11.948 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.36-.214-3.728.979.995-3.638-.235-.374A9.867 9.867 0 0 1 2.118 12C2.118 6.537 6.537 2.118 12 2.118S21.882 6.537 21.882 12 17.463 21.882 12 21.882z"/>
-        </svg>
-        Comprar pelo WhatsApp
+      <a id="header-whatsapp-btn" href="#" target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.554 4.122 1.523 5.854L.057 23.428c-.076.286.196.545.477.461l5.693-1.496A11.948 11.948 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.36-.214-3.728.979.995-3.638-.235-.374A9.867 9.867 0 0 1 2.118 12C2.118 6.537 6.537 2.118 12 2.118S21.882 6.537 21.882 12 17.463 21.882 12 21.882z"/></svg>
+        Solicitar orçamento
       </a>
-      <!-- Hambúrguer mobile -->
       <button class="hamburger" id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -87,7 +119,6 @@
   </div>
 </header>
 
-<!-- Menu mobile (aberto pelo hamburger) -->
 <nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Menu mobile">
   <a href="#inicio"         onclick="closeMobileNav()">Início</a>
   <a href="#produtos"       onclick="closeMobileNav()">Produtos</a>
@@ -97,180 +128,171 @@
   <a href="#contato"        onclick="closeMobileNav()">Contato</a>
 </nav>
 
-<!-- ============================================================
-     HERO / BANNER PRINCIPAL
-     ============================================================ -->
 <main>
+
+<!-- HERO -->
 <section class="hero" id="inicio" aria-label="Banner principal">
   <div class="hero-inner">
-
-    <!-- Texto do hero (preenchido pelo script.js) -->
     <div class="hero-content">
-      <div class="hero-badge" id="hero-badge">✦ Fabricação sob demanda</div>
+      <div class="hero-badge" id="hero-badge">✦ Fabricação digital em São José dos Campos</div>
       <h1 class="hero-title" id="hero-title">
-        Produtos personalizados feitos com <em>fabricação digital</em>
+        CorteForma | Impressão 3D e Corte a Laser em <em>São José dos Campos</em>
       </h1>
       <p class="hero-subtitle" id="hero-subtitle">
-        Chaveiros, placas, brindes, peças decorativas e muito mais —
-        produzidos com impressão 3D, resina, laser e CNC.
+        Transformamos ideias em produtos reais com impressão 3D, resina, corte e gravação a laser, protótipos, brindes e peças personalizadas.
       </p>
-      <div class="hero-actions">
-        <a href="#produtos" class="btn btn-primary" id="hero-btn-primary">Ver produtos</a>
-        <a href="#" class="btn btn-outline" id="hero-btn-secondary" target="_blank" rel="noopener">
-          Comprar pelo WhatsApp
-        </a>
+      <div class="hero-highlights" id="hero-highlights">
+        <span class="hero-hl">🖨️ Impressão 3D</span>
+        <span class="hero-hl">⚡ Laser CO₂</span>
+        <span class="hero-hl">✏️ Personalizados</span>
+        <span class="hero-hl">⚙️ Protótipos</span>
       </div>
-      <div class="hero-stats">
-        <div>
-          <div class="hero-stat-value">10+</div>
-          <div class="hero-stat-label">Tipos de produtos</div>
-        </div>
-        <div>
-          <div class="hero-stat-value">3D</div>
-          <div class="hero-stat-label">Impressão, resina, laser</div>
-        </div>
-        <div>
-          <div class="hero-stat-value">100%</div>
-          <div class="hero-stat-label">Personalizável</div>
-        </div>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary" id="hero-btn-primary" target="_blank" rel="noopener">Solicitar orçamento</a>
+        <a href="#produtos" class="btn btn-outline" id="hero-btn-secondary">Ver produtos</a>
       </div>
     </div>
-
-    <!-- Visual decorativo -->
     <div class="hero-visual" aria-hidden="true">
       <div class="hero-card-stack">
         <div class="hcard hcard-back1"></div>
         <div class="hcard hcard-back2"></div>
-        <div class="hcard hcard-main" id="hero-featured-img">
-          <!-- Imagem do produto em destaque injetada pelo JS -->
-        </div>
+        <div class="hcard hcard-main" id="hero-featured-img"></div>
       </div>
-      <div class="hero-pill hero-pill-1">
-        <span class="dot"></span> Feito sob encomenda
-      </div>
-      <div class="hero-pill hero-pill-2">
-        <span class="dot"></span> Entrega em todo Brasil
-      </div>
+      <div class="hero-pill hero-pill-1"><span class="dot"></span> Fabricado sob medida</div>
+      <div class="hero-pill hero-pill-2"><span class="dot"></span> Entrega em todo Brasil</div>
     </div>
-
   </div>
 </section>
 
-<!-- ============================================================
-     CATEGORIAS
-     ============================================================ -->
+<!-- SOBRE -->
+<section class="about-section" id="sobre" aria-label="Sobre a CorteForma">
+  <div class="container">
+    <div class="about-inner reveal">
+      <div class="about-text">
+        <span class="section-tag">Quem somos</span>
+        <h2 class="section-title" style="text-align:left">A CorteForma transforma ideias em produtos reais</h2>
+        <p class="about-desc">
+          Somos uma empresa de <strong>fabricação digital</strong> localizada em <strong>São José dos Campos - SP</strong>,
+          especializada em <strong>impressão 3D</strong>, <strong>resina</strong>, <strong>corte e gravação a laser CO₂</strong>.
+          Produzimos brindes personalizados, protótipos, placas, chaveiros, peças decorativas e soluções sob medida
+          para empresas e pessoas físicas.
+        </p>
+        <p class="about-desc">
+          Combinamos tecnologia de ponta com atenção aos detalhes para entregar produtos únicos com
+          qualidade e prazo. Atendemos em São José dos Campos e enviamos para todo o Brasil.
+        </p>
+        <a href="#" class="btn btn-primary" id="about-wa-btn" target="_blank" rel="noopener" style="margin-top:8px">
+          Falar com a equipe
+        </a>
+      </div>
+      <div class="about-stats">
+        <div class="about-stat"><div class="about-stat-val">10+</div><div class="about-stat-label">Tipos de produto</div></div>
+        <div class="about-stat"><div class="about-stat-val">3D</div><div class="about-stat-label">Impressão & resina</div></div>
+        <div class="about-stat"><div class="about-stat-val">CO₂</div><div class="about-stat-label">Laser de precisão</div></div>
+        <div class="about-stat"><div class="about-stat-val">100%</div><div class="about-stat-label">Personalizável</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIAS -->
 <section class="categories-section" id="categorias" aria-label="Categorias de produtos">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-tag">Navegue por categoria</span>
       <h2 class="section-title">O que você procura?</h2>
-      <p class="section-subtitle">Explore nossos produtos por categoria e encontre o que precisa.</p>
+      <p class="section-subtitle">Impressão 3D, corte a laser, brindes, protótipos e muito mais em São José dos Campos.</p>
     </div>
-    <!-- Cards de categoria injetados pelo JS -->
     <div class="categories-grid reveal" id="categories-grid"></div>
   </div>
 </section>
 
-<!-- ============================================================
-     PRODUTOS EM DESTAQUE
-     ============================================================ -->
+<!-- PRODUTOS EM DESTAQUE -->
 <section class="featured-section" id="destaques" aria-label="Produtos em destaque">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-tag">Mais pedidos</span>
       <h2 class="section-title">Produtos em destaque</h2>
-      <p class="section-subtitle">Conheça os produtos mais populares da nossa vitrine.</p>
+      <p class="section-subtitle">Conheça os produtos mais populares da CorteForma.</p>
     </div>
-    <!-- Cards injetados pelo JS -->
     <div class="featured-grid reveal" id="featured-grid"></div>
   </div>
 </section>
 
-<!-- ============================================================
-     TODOS OS PRODUTOS + FILTRO
-     ============================================================ -->
-<section class="products-section" id="produtos" aria-label="Todos os produtos">
+<!-- TODOS OS PRODUTOS -->
+<section class="products-section" id="produtos" aria-label="Catálogo completo de produtos">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-tag">Catálogo completo</span>
       <h2 class="section-title">Todos os produtos</h2>
-      <p class="section-subtitle">Filtre por categoria e encontre o produto ideal.</p>
+      <p class="section-subtitle">Filtre por categoria e encontre o produto ideal para você.</p>
     </div>
-    <!-- Filtros injetados pelo JS -->
     <div class="filter-bar reveal" id="filter-bar" role="group" aria-label="Filtros de categoria"></div>
-    <!-- Grid de produtos injetada pelo JS -->
     <div class="products-grid" id="products-grid"></div>
   </div>
 </section>
 
-<!-- ============================================================
-     SEÇÃO PERSONALIZADOS
-     ============================================================ -->
-<section class="custom-section" id="personalizados" aria-label="Produto personalizado sob encomenda">
+<!-- PERSONALIZADOS -->
+<section class="custom-section" id="personalizados" aria-label="Produtos personalizados sob encomenda">
   <div class="container">
     <div class="custom-inner reveal">
       <div class="custom-icon">✏️</div>
-      <h2 class="section-title" id="custom-title">Tem uma ideia diferente?</h2>
+      <h2 class="section-title" id="custom-title">Tem uma ideia, desenho ou arquivo 3D?</h2>
       <p class="section-subtitle" id="custom-subtitle">
-        Envie uma referência, imagem, desenho ou descrição pelo WhatsApp
-        e transformamos sua ideia em um produto personalizado.
+        A CorteForma desenvolve produtos personalizados sob medida — desde brindes e peças decorativas
+        até protótipos e soluções técnicas em São José dos Campos.
       </p>
       <a href="#" class="btn btn-ghost" id="custom-btn" target="_blank" rel="noopener">
-        ✏️ Pedir produto personalizado
+        ✏️ Solicitar orçamento personalizado
       </a>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     COMO COMPRAR
-     ============================================================ -->
-<section class="howtobuy-section" id="como-comprar" aria-label="Como comprar">
+<!-- COMO COMPRAR -->
+<section class="howtobuy-section" id="como-comprar" aria-label="Como solicitar orçamento">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-tag" id="howtobuy-subtitle-tag">Simples e rápido</span>
-      <h2 class="section-title" id="howtobuy-title">Como comprar</h2>
-      <p class="section-subtitle" id="howtobuy-subtitle">Compre direto pelo WhatsApp em poucos passos.</p>
+      <span class="section-tag">Simples e rápido</span>
+      <h2 class="section-title" id="howtobuy-title">Como solicitar um orçamento</h2>
+      <p class="section-subtitle" id="howtobuy-subtitle">Do primeiro contato à entrega do produto em poucos passos.</p>
     </div>
-    <!-- Passos injetados pelo JS -->
     <div class="steps-grid reveal" id="steps-grid"></div>
   </div>
 </section>
 
-<!-- ============================================================
-     DIFERENCIAIS
-     ============================================================ -->
-<section class="features-section" id="diferenciais" aria-label="Por que a Corteforma">
+<!-- DIFERENCIAIS -->
+<section class="features-section" id="diferenciais" aria-label="Diferenciais da CorteForma">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-tag">Por que a Corteforma?</span>
+      <span class="section-tag">Por que a CorteForma?</span>
       <h2 class="section-title">Tecnologia e cuidado em cada peça</h2>
-      <p class="section-subtitle">Combinamos fabricação digital com atenção aos detalhes para entregar produtos únicos.</p>
+      <p class="section-subtitle">Fabricação digital com impressão 3D, resina e laser CO₂ para produtos únicos em São José dos Campos.</p>
     </div>
-    <!-- Cards injetados pelo JS -->
     <div class="features-grid reveal" id="features-grid"></div>
   </div>
 </section>
 
-<!-- ============================================================
-     CONTATO
-     ============================================================ -->
-<section class="contact-section" id="contato" aria-label="Contato">
+<!-- CONTATO -->
+<section class="contact-section" id="contato" aria-label="Contato CorteForma">
   <div class="container">
     <div class="contact-grid">
       <div class="contact-left">
-        <div class="section-header reveal">
+        <div class="section-header reveal" style="text-align:left">
           <span class="section-tag">Fale conosco</span>
-          <h2 class="section-title">Entre em contato</h2>
-          <p class="section-subtitle">Atendemos pelo WhatsApp, Instagram e e-mail.</p>
+          <h2 class="section-title">Envie sua ideia e solicite um orçamento personalizado</h2>
+          <p class="section-subtitle">Atendemos pelo WhatsApp, Instagram e e-mail. Nossa equipe responde rapidamente.</p>
         </div>
-        <!-- Itens de contato injetados pelo JS -->
         <div class="contact-items reveal" id="contact-items"></div>
       </div>
       <div class="contact-map reveal" aria-label="Localização">
         <div class="contact-map-icon">📍</div>
         <div class="contact-map-city" id="contact-city">São José dos Campos - SP</div>
-        <div class="contact-map-text">Atendimento presencial e envio para todo o Brasil</div>
+        <div class="contact-map-text">Impressão 3D, corte a laser e produtos personalizados</div>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          <a href="#" id="contact-wa-btn" class="btn btn-whatsapp btn-sm" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <a href="https://instagram.com/corteforma" class="btn btn-sm" style="background:#E1306C;color:#fff" target="_blank" rel="noopener">📸 Instagram</a>
+        </div>
       </div>
     </div>
   </div>
@@ -278,24 +300,19 @@
 
 </main>
 
-<!-- ============================================================
-     RODAPÉ
-     ============================================================ -->
+<!-- RODAPÉ -->
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-top">
-
       <div class="footer-brand">
-        <a href="#inicio" class="logo" id="footer-logo" aria-label="Corteforma">
+        <a href="#inicio" class="logo" id="footer-logo" aria-label="CorteForma">
           <div class="logo-mark">CF</div>
-          <span id="footer-company-name">Corteforma</span>
+          <span id="footer-company-name">CorteForma</span>
         </a>
         <p class="footer-tagline" id="footer-tagline">
-          Produtos personalizados feitos com fabricação digital.<br>
-          São José dos Campos - SP.
+          Impressão 3D, corte e gravação a laser, resina, protótipos e produtos personalizados em São José dos Campos - SP.
         </p>
       </div>
-
       <div>
         <div class="footer-col-title">Navegação</div>
         <div class="footer-links">
@@ -307,30 +324,23 @@
           <a href="#contato">Contato</a>
         </div>
       </div>
-
       <div>
         <div class="footer-col-title">Categorias</div>
         <div class="footer-links" id="footer-categories"></div>
       </div>
-
       <div>
         <div class="footer-col-title">Contato</div>
         <div class="footer-links" id="footer-contact-links"></div>
       </div>
-
     </div>
-
     <div class="footer-bottom">
-      <div class="footer-copy" id="footer-copy">© 2025 Corteforma. Todos os direitos reservados.</div>
+      <div class="footer-copy" id="footer-copy">© 2025 CorteForma. Todos os direitos reservados.</div>
       <div class="footer-social" id="footer-social" aria-label="Redes sociais"></div>
     </div>
-
   </div>
 </footer>
 
-<!-- ============================================================
-     MODAL DE DETALHES DO PRODUTO
-     ============================================================ -->
+<!-- MODAL -->
 <div class="modal-overlay" id="product-modal" role="dialog" aria-modal="true" aria-label="Detalhes do produto">
   <div class="modal-box">
     <button class="modal-close" id="modal-close-btn" aria-label="Fechar">✕</button>
@@ -339,48 +349,30 @@
         <img id="modal-img" src="" alt="">
       </div>
       <div class="modal-info">
-        <div class="modal-cat" id="modal-cat"></div>
+        <div class="modal-cat"  id="modal-cat"></div>
         <div class="modal-name" id="modal-name"></div>
         <div class="modal-price" id="modal-price"></div>
         <div class="modal-desc" id="modal-desc"></div>
         <div class="modal-meta">
-          <div class="modal-meta-row">
-            <span class="modal-meta-label">Prazo:</span>
-            <span class="modal-meta-val" id="modal-deadline"></span>
-          </div>
-          <div class="modal-meta-row">
-            <span class="modal-meta-label">Status:</span>
-            <span class="modal-meta-val" id="modal-status"></span>
-          </div>
-          <div class="modal-meta-row">
-            <span class="modal-meta-label">Tags:</span>
-            <div class="modal-tags" id="modal-tags"></div>
-          </div>
+          <div class="modal-meta-row"><span class="modal-meta-label">Prazo:</span><span class="modal-meta-val" id="modal-deadline"></span></div>
+          <div class="modal-meta-row"><span class="modal-meta-label">Status:</span><span class="modal-meta-val" id="modal-status"></span></div>
+          <div class="modal-meta-row"><span class="modal-meta-label">Tags:</span><div class="modal-tags" id="modal-tags"></div></div>
         </div>
         <div class="modal-actions">
           <a href="#" class="btn btn-whatsapp" id="modal-whatsapp-btn" target="_blank" rel="noopener">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.554 4.122 1.523 5.854L.057 23.428c-.076.286.196.545.477.461l5.693-1.496A11.948 11.948 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.36-.214-3.728.979.995-3.638-.235-.374A9.867 9.867 0 0 1 2.118 12C2.118 6.537 6.537 2.118 12 2.118S21.882 6.537 21.882 12 17.463 21.882 12 21.882z"/>
-            </svg>
-            Comprar pelo WhatsApp
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.554 4.122 1.523 5.854L.057 23.428c-.076.286.196.545.477.461l5.693-1.496A11.948 11.948 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.36-.214-3.728.979.995-3.638-.235-.374A9.867 9.867 0 0 1 2.118 12C2.118 6.537 6.537 2.118 12 2.118S21.882 6.537 21.882 12 17.463 21.882 12 21.882z"/></svg>
+            Solicitar orçamento pelo WhatsApp
           </a>
-          <button class="btn btn-outline btn-sm" id="modal-close-btn2" aria-label="Fechar detalhes">
-            Fechar
-          </button>
+          <button class="btn btn-outline btn-sm" id="modal-close-btn2">Fechar</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Botão flutuante WhatsApp -->
-<a href="#" class="whatsapp-float" id="whatsapp-float-btn" target="_blank" rel="noopener"
-   aria-label="Falar no WhatsApp">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.554 4.122 1.523 5.854L.057 23.428c-.076.286.196.545.477.461l5.693-1.496A11.948 11.948 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.36-.214-3.728.979.995-3.638-.235-.374A9.867 9.867 0 0 1 2.118 12C2.118 6.537 6.537 2.118 12 2.118S21.882 6.537 21.882 12 17.463 21.882 12 21.882z"/>
-  </svg>
+<!-- WhatsApp flutuante -->
+<a href="#" class="whatsapp-float" id="whatsapp-float-btn" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.554 4.122 1.523 5.854L.057 23.428c-.076.286.196.545.477.461l5.693-1.496A11.948 11.948 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.36-.214-3.728.979.995-3.638-.235-.374A9.867 9.867 0 0 1 2.118 12C2.118 6.537 6.537 2.118 12 2.118S21.882 6.537 21.882 12 17.463 21.882 12 21.882z"/></svg>
 </a>
 
 <script src="script.js"></script>
