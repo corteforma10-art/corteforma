@@ -57,11 +57,17 @@
   // ----------------------------------------------------------
 
   function buildHeader() {
-    // Logo
+    // Logo — usa imagem se configurada, senão exibe iniciais + nome
     const logoMark = document.getElementById('logo-mark');
     const logoName = document.getElementById('logo-name');
-    if (logoMark) logoMark.textContent = cfg.companyName.slice(0, 2).toUpperCase();
-    if (logoName) logoName.textContent = cfg.companyName;
+    if (cfg.logo && logoMark) {
+      logoMark.innerHTML = `<img src="${esc(cfg.logo)}" alt="${esc(cfg.companyName)}" style="height:38px;width:auto;max-width:140px;object-fit:contain;display:block;">`;
+      logoMark.style.cssText = 'background:transparent;width:auto;height:auto;border-radius:0;padding:0;';
+      if (logoName) logoName.style.display = 'none';
+    } else {
+      if (logoMark) logoMark.textContent = cfg.companyName.slice(0, 2).toUpperCase();
+      if (logoName) logoName.textContent = cfg.companyName;
+    }
 
     // Footer logo
     const fName = document.getElementById('footer-company-name');

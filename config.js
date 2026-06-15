@@ -11,21 +11,22 @@ const siteConfig = {
   // ----------------------------------------------------------
   // INFORMAÇÕES DA EMPRESA
   // ----------------------------------------------------------
-  companyName: "Corteforma",
+  companyName: "CorteForma",
   slogan: "Produtos personalizados feitos com fabricação digital",
-  whatsappNumber: "5512999999999", // Formato: 55 + DDD + número (sem espaços ou traços)
-  email: "contato@corteforma.com.br",
+  whatsappNumber: "5512997347806", // Formato: 55 + DDD + número (sem espaços ou traços)
+  email: "contato@corteforma.com",
   instagram: "https://instagram.com/corteforma",
   city: "São José dos Campos - SP",
   businessHours: "Segunda a sexta, das 9h às 18h",
+  logo: "assets/logo.jpg", // Logo da empresa
 
   // ----------------------------------------------------------
   // CORES DO SITE
   // Altere aqui para mudar o visual sem mexer no CSS
   // ----------------------------------------------------------
   colors: {
-    primary: "#0f6fff",       // Cor principal (botões, destaques)
-    secondary: "#111827",     // Cor secundária (textos escuros, rodapé)
+    primary: "#e63000",       // Cor principal (vermelho/laranja da marca)
+    secondary: "#111111",     // Cor secundária (preto da marca)
     accent: "#25D366",        // Cor do WhatsApp (botão verde)
     background: "#f8fafc",    // Fundo principal da página
     surface: "#ffffff",       // Fundo dos cards

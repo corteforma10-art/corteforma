@@ -76,7 +76,10 @@
     .topbar-btn-save { background: var(--primary); color: #fff; }
     .topbar-btn-save:hover { filter: brightness(1.1); }
     .topbar-btn-export { background: var(--success); color: #fff; }
-    .topbar-btn-export:hover { filter: brightness(1.05); }
+    .topbar-btn-export { background: #334155; color: #fff; }
+    .topbar-btn-export:hover { filter: brightness(1.1); }
+    .topbar-btn-publish { background: #e63000; color: #fff; }
+    .topbar-btn-publish:hover { filter: brightness(1.1); transform: translateY(-1px); }
     .topbar-btn-logout { background: transparent; color: rgba(255,255,255,0.5); font-size: 0.8rem; padding: 6px 10px; }
     .topbar-btn-logout:hover { color: #fff; }
 
@@ -315,7 +318,8 @@
     <span class="topbar-badge">Admin</span>
     <div class="topbar-actions">
       <button class="topbar-btn topbar-btn-view" onclick="window.open('index.html','_blank')">👁 Ver site</button>
-      <button class="topbar-btn topbar-btn-export" onclick="openExport()">⬇ Exportar config.js</button>
+      <button class="topbar-btn topbar-btn-export" onclick="openExport()">⬇ Exportar</button>
+      <button class="topbar-btn topbar-btn-publish" onclick="openPublish()">🚀 Publicar no site</button>
       <button class="topbar-btn topbar-btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </header>
@@ -364,11 +368,11 @@
         <div class="card">
           <div class="card-title">🚀 Como usar este painel</div>
           <p style="font-size:.875rem;color:var(--muted);line-height:1.7">
-            Use o menu lateral para navegar entre as seções. Faça as alterações desejadas e clique em
-            <strong>"Exportar config.js"</strong> no topo para baixar o arquivo atualizado. Substitua o
-            <code>config.js</code> do seu site pelo arquivo baixado e faça o novo deploy na Cloudflare Pages.
+            Use o menu lateral para editar produtos, categorias, cores e textos.<br><br>
+            Quando terminar, clique em <strong style="color:#e63000">🚀 Publicar no site</strong> no topo.
+            O site é atualizado automaticamente em cerca de <strong>1 minuto</strong> — sem precisar baixar ou subir arquivos.
             <br><br>
-            Todas as alterações ficam salvas no navegador via <strong>localStorage</strong> enquanto você edita.
+            Na primeira vez, você precisa configurar o <strong>Token do GitHub</strong> no painel de publicação.
           </p>
         </div>
       </div>
@@ -550,6 +554,69 @@
       </div>
 
     </main>
+  </div>
+</div>
+
+<!-- PUBLISH MODAL -->
+<div class="export-overlay" id="publish-overlay">
+  <div class="export-box" style="max-width:520px">
+    <div class="export-header">
+      <h3>🚀 Publicar no site</h3>
+      <button class="btn-icon" onclick="closePublish()">✕</button>
+    </div>
+    <div class="export-body">
+
+      <div id="publish-setup" style="display:none">
+        <p class="export-info">
+          Para publicar direto no site, você precisa de um <strong>Token do GitHub</strong>.
+          Ele é criado uma vez só e fica salvo no seu navegador.
+        </p>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-bottom:16px;font-size:.82rem;color:#475569;line-height:1.8">
+          <strong>Como criar o token:</strong><br>
+          1. Acesse <a href="https://github.com/settings/tokens/new" target="_blank" style="color:#0f6fff">github.com/settings/tokens/new</a><br>
+          2. Em "Note" coloque: <code>Corteforma Admin</code><br>
+          3. Em "Expiration" escolha: <code>No expiration</code><br>
+          4. Em "Select scopes" marque: <code>✅ repo</code><br>
+          5. Clique em <strong>"Generate token"</strong><br>
+          6. Copie o token gerado e cole abaixo
+        </div>
+        <div class="field" style="margin-bottom:12px">
+          <label>Token do GitHub (ghp_...)</label>
+          <input type="password" id="gh-token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="font-family:monospace">
+        </div>
+        <div class="field" style="margin-bottom:12px">
+          <label>Usuário do GitHub</label>
+          <input type="text" id="gh-user-input" placeholder="corteforma10-art">
+        </div>
+        <div class="field" style="margin-bottom:16px">
+          <label>Nome do repositório</label>
+          <input type="text" id="gh-repo-input" placeholder="corteforma">
+        </div>
+        <button class="btn btn-primary" onclick="saveGithubConfig()" style="width:100%;justify-content:center">Salvar configuração</button>
+      </div>
+
+      <div id="publish-ready" style="display:none">
+        <div style="text-align:center;padding:16px 0 24px">
+          <div style="font-size:3rem;margin-bottom:12px">🚀</div>
+          <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:#111827;margin-bottom:8px">Pronto para publicar!</div>
+          <div style="font-size:.875rem;color:#64748b;margin-bottom:24px">
+            Repositório: <strong id="publish-repo-label"></strong><br>
+            O site será atualizado em cerca de 1 minuto após a publicação.
+          </div>
+          <button class="btn btn-primary" onclick="publishToGithub()" id="publish-go-btn" style="width:100%;justify-content:center;font-size:1rem;padding:14px">
+            🚀 Publicar agora
+          </button>
+          <div id="publish-progress" style="display:none;margin-top:16px">
+            <div style="font-size:.875rem;color:#64748b" id="publish-status-text">Publicando...</div>
+            <div style="margin-top:8px;height:4px;background:#e2e8f0;border-radius:99px;overflow:hidden">
+              <div id="publish-bar" style="height:100%;width:0%;background:#e63000;border-radius:99px;transition:width .4s ease"></div>
+            </div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="resetGithubConfig()" style="margin-top:16px">⚙ Trocar configuração</button>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -1163,6 +1230,142 @@ function downloadConfig() {
   a.click();
   URL.revokeObjectURL(url);
   toast('config.js baixado! Substitua no site e faça novo deploy.');
+}
+
+
+// ── GITHUB PUBLISH ────────────────────────────────────────
+
+function openPublish() {
+  const cfg = loadGithubConfig();
+  if (cfg) {
+    document.getElementById('publish-setup').style.display = 'none';
+    document.getElementById('publish-ready').style.display = 'block';
+    document.getElementById('publish-repo-label').textContent = cfg.user + '/' + cfg.repo;
+  } else {
+    document.getElementById('publish-setup').style.display = 'block';
+    document.getElementById('publish-ready').style.display = 'none';
+  }
+  document.getElementById('publish-overlay').classList.add('open');
+}
+
+function closePublish() {
+  document.getElementById('publish-overlay').classList.remove('open');
+  document.getElementById('publish-progress').style.display = 'none';
+  const btn = document.getElementById('publish-go-btn');
+  if (btn) { btn.disabled = false; btn.textContent = '🚀 Publicar agora'; }
+}
+
+document.getElementById('publish-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closePublish();
+});
+
+function loadGithubConfig() {
+  try {
+    const s = localStorage.getItem('cf_github_config');
+    return s ? JSON.parse(s) : null;
+  } catch(e) { return null; }
+}
+
+function saveGithubConfig() {
+  const token = document.getElementById('gh-token-input').value.trim();
+  const user  = document.getElementById('gh-user-input').value.trim();
+  const repo  = document.getElementById('gh-repo-input').value.trim();
+  if (!token || !user || !repo) { toast('Preencha todos os campos.', 'error'); return; }
+  localStorage.setItem('cf_github_config', JSON.stringify({ token, user, repo }));
+  toast('Configuração salva!');
+  openPublish();
+}
+
+function resetGithubConfig() {
+  if (!confirm('Remover configuração do GitHub?')) return;
+  localStorage.removeItem('cf_github_config');
+  openPublish();
+}
+
+async function publishToGithub() {
+  const ghCfg = loadGithubConfig();
+  if (!ghCfg) { toast('Configure o GitHub primeiro.', 'error'); return; }
+
+  const btn = document.getElementById('publish-go-btn');
+  const progress = document.getElementById('publish-progress');
+  const statusText = document.getElementById('publish-status-text');
+  const bar = document.getElementById('publish-bar');
+
+  btn.disabled = true;
+  btn.textContent = 'Publicando...';
+  progress.style.display = 'block';
+
+  function setProgress(pct, msg) {
+    bar.style.width = pct + '%';
+    statusText.textContent = msg;
+  }
+
+  try {
+    setProgress(20, 'Conectando ao GitHub...');
+
+    const { token, user, repo } = ghCfg;
+    const filePath = 'config.js';
+    const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/${filePath}`;
+
+    // Busca SHA atual do arquivo
+    setProgress(40, 'Buscando versão atual do arquivo...');
+    const getRes = await fetch(apiUrl, {
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+
+    let sha = null;
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    }
+
+    // Gera conteúdo novo em base64
+    setProgress(60, 'Preparando novo config.js...');
+    const newContent = generateConfigJS();
+    const encoded = btoa(unescape(encodeURIComponent(newContent)));
+
+    // Faz o commit
+    setProgress(80, 'Enviando para o GitHub...');
+    const body = {
+      message: 'Admin: atualiza config.js em ' + new Date().toLocaleString('pt-BR'),
+      content: encoded,
+    };
+    if (sha) body.sha = sha;
+
+    const putRes = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!putRes.ok) {
+      const err = await putRes.json();
+      throw new Error(err.message || 'Erro ao publicar');
+    }
+
+    setProgress(100, '✅ Publicado com sucesso!');
+    bar.style.background = '#22c55e';
+    btn.textContent = '✅ Publicado!';
+
+    toast('Site atualizado! A Cloudflare vai publicar em ~1 minuto.');
+
+    setTimeout(() => {
+      closePublish();
+      bar.style.background = '#e63000';
+    }, 3000);
+
+  } catch(err) {
+    setProgress(100, '❌ Erro: ' + err.message);
+    bar.style.background = '#ef4444';
+    btn.disabled = false;
+    btn.textContent = '🚀 Tentar novamente';
+    toast('Erro ao publicar: ' + err.message, 'error');
+    console.error(err);
+  }
 }
 
 // ── HELPERS ───────────────────────────────────────────────
