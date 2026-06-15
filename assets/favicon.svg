@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="12" fill="#111111"/>
+  <!-- Forma do C externo (preto) -->
+  <path d="M48 10 L20 10 C14 10 10 14 10 20 L10 44 C10 50 14 54 20 54 L48 54 L48 44 L22 44 L22 20 L48 20 Z" fill="#111111" stroke="#fff" stroke-width="0"/>
+  <!-- C externo preenchido branco -->
+  <path d="M46 12 L20 12 C15 12 12 15 12 20 L12 44 C12 49 15 52 20 52 L46 52 L46 44 L21 44 C19 44 18 43 18 41 L18 23 C18 21 19 20 21 20 L46 20 Z" fill="#ffffff"/>
+  <!-- C interno laranja/vermelho -->
+  <path d="M46 22 L26 22 L26 30 L40 30 L40 34 L26 34 L26 42 L46 42 L46 36 L34 36 L34 28 L46 28 Z" fill="#e63000"/>
+  <!-- Detalhe laranja no canto superior -->
+  <path d="M46 12 L46 20 L38 20 L30 12 Z" fill="#e63000"/>
+</svg>
