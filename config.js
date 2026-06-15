@@ -1,6 +1,6 @@
 // ============================================================
 // CORTEFORMA - ARQUIVO DE CONFIGURAÇÃO CENTRAL
-// Gerado pelo Painel Admin em 15/06/2026, 13:04:25
+// Gerado pelo Painel Admin em 15/06/2026, 13:12:28
 // ============================================================
 
 const siteConfig = {
@@ -171,6 +171,23 @@ const siteConfig = {
       "featured": false,
       "deadline": "A combinar",
       "whatsappMessage": "Olá! Tenho interesse em um *produto personalizado sob encomenda*. Poderia me passar mais informações?"
+    },
+    {
+      "id": 10,
+      "name": "Barco Thousand Sunny",
+      "category": "mdf",
+      "price": "R$100,00",
+      "shortDescription": "Barco Thousand Sunny em MDF, inspirado em One Piece, cortado e gravado em laser CO₂.",
+      "fullDescription": "Barco Thousand Sunny inspirado em One Piece, produzido em MDF com corte e gravação em laser CO₂.\n\nA peça é composta por várias partes cortadas com precisão, criando volume, encaixes e detalhes decorativos. Ideal para fãs de anime, colecionadores, decoração de ambiente, presentes personalizados e projetos criativos.\n\nMaterial: MDF\nProcesso: corte e gravação a laser CO₂\nProduto decorativo montado artesanalmente.\n",
+      "image": "https://imgur.com/2ARQ5ql",
+      "tags": [
+        "Mdf",
+        "Laser"
+      ],
+      "status": "Sob encomenda",
+      "featured": true,
+      "deadline": "A combinar",
+      "whatsappMessage": "Olá! Tenho interesse em *Barco Thousand Sunny*. Gostaria de mais informações."
     }
   ],
   "features": [
